@@ -1,0 +1,35 @@
+{
+    "xs": "8",
+    "2xs": "6",
+    "3xs": "4",
+    "xl": "18",
+    "4xs": "2",
+    "2xl": "20",
+    "3xl": "22",
+    "4xl": "24",
+    "5xl": "26",
+    "small": "10",
+    "large": "16",
+    "medium": "14",
+    "normal": "12",
+    "name": "My Test",
+    "splash_screen_delay": "3",
+    "minimum_screen_width": "375",
+    "minimum_screen_height": "812",
+    "minimum_password_length": "6",
+    "maximum_password_length": "12",
+    "earth_polar_radius": "6356.752",
+    "earth_equator_radius": "6378.137",
+    "black_color_variant_1": {
+      "alpha": "77",
+      "color": "000000"
+    },
+    "grey_color_variant_1": {
+      "alpha": "104",
+      "color": "757575"
+    },
+    "gold_color_variant_1": {
+      "alpha": "255",
+      "color": "FFB24D"
+    }
+  }
