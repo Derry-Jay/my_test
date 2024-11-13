@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../extensions/extensions.dart';
 
+import '../../../extensions/extensions.dart';
 import '../../widgets/common/screen_layout.dart';
 import '../../widgets/common/themed_apple_app_bar.dart';
 import '../../widgets/common/themed_material_app_bar.dart';
@@ -21,42 +21,9 @@ class SampleScreen extends StatelessWidget {
             )));
   }
 }
-// import 'package:flutter/scheduler.dart';
 // import 'package:video_player/video_player.dart';
-// class DateField extends StatelessWidget {
-//   const DateField({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: <Widget>[
-//         Flexible(child: TextSpan(
-//           text: 'Date of issue ',
-//           style: 'poppins'.getStyleFromFont(color: FyColor.black500),
-//           children: const <InlineSpan>[
-//             TextSpan(text: '*', style: TextStyle(color: FyColor.red450)),
-//           ],
-//         ).wealthyText()),
-//         Flexible(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: <Widget>[
-//               Flexible(child: ),
-//               Flexible(child: child),
-//               Flexible(child: )
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-// Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Camera example'),
-//       ),
-//       body: ,
-//     )
+
   // /// Display the preview from the camera (or a message if the preview is not available).
   // Widget _cameraPreviewWidget() {
   //   final CameraController? cameraController = controller;
@@ -723,41 +690,7 @@ class SampleScreen extends StatelessWidget {
             //         children: <Widget>[
             //           const Center(
             //             child: Text('Exposure Mode'),
-            //           ),
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //             children: <Widget>[
-            //               TextButton(
-            //                 style: styleAuto,
-            //                 onPressed: controller != null
-            //                     ? () =>
-            //                         onSetExposureModeButtonPressed(ExposureMode.auto)
-            //                     : null,
-            //                 onLongPress: () {
-            //                   if (controller != null) {
-            //                     controller!.setExposurePoint(null);
-            //                     showInSnackBar('Resetting exposure point');
-            //                   }
-            //                 },
-            //                 child: const Text('AUTO'),
-            //               ),
-            //               TextButton(
-            //                 style: styleLocked,
-            //                 onPressed: controller != null
-            //                     ? () =>
-            //                         onSetExposureModeButtonPressed(ExposureMode.locked)
-            //                     : null,
-            //                 child: const Text('LOCKED'),
-            //               ),
-            //               TextButton(
-            //                 style: styleLocked,
-            //                 onPressed: controller != null
-            //                     ? () => controller!.setExposureOffset(0.0)
-            //                     : null,
-            //                 child: const Text('RESET OFFSET'),
-            //               ),
-            //             ],
-            //           ),
+            //           ),,
             //           const Center(
             //             child: Text('Exposure Offset'),
             //           ),

@@ -14,6 +14,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fraction/fraction.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -37,13 +38,13 @@ import '../views/widgets/common/custom_button.dart';
 import '../views/widgets/common/empty_widget.dart';
 import 'continuations.dart';
 
-// extension Mileage on IosDeviceInfo {
-//   String get value => data.getEncoded();
-// }
+extension WidUt on Widget {
+  Expanded wrapWithExpanded({Key? key, int? flex}) =>
+      Expanded(flex: flex ?? 1, child: this);
 
-// extension Extras on AndroidDeviceInfo {
-//   String get value => data.getEncoded();
-// }
+  Flexible wrapWithFlexible({Key? key, int? flex, FlexFit? fit}) =>
+      Flexible(flex: flex ?? 1, fit: fit ?? FlexFit.loose, child: this);
+}
 
 extension Pos on Position {
   LatLng get ll => LatLng(latitude, longitude);
@@ -1811,6 +1812,8 @@ extension Utils on String {
   bool get isImage =>
       <String>['jpg', 'jpeg', 'png', 'svg', 'gif'].contains(fileExtension);
 
+  bool get isSvg => fileExtension == 'svg';
+
   bool toBool([bool? isCaseSensitive]) =>
       bool.tryParse(trimmed, caseSensitive: isCaseSensitive ?? true) ?? false;
 
@@ -1899,7 +1902,9 @@ extension Utils on String {
       'pics',
       'pictures'
     ]) {
-      if (trimmed.contains(element) || element.getRE().hasMatch(trimmed) || trimmed.isImage) {
+      if (trimmed.contains(element) ||
+          element.getRE().hasMatch(trimmed) ||
+          trimmed.isImage) {
         result = true;
         break;
       } else {
@@ -1947,7 +1952,7 @@ extension Utils on String {
         .asUint8List();
   }
 
-  Image getFromAsset(
+  Widget getImageFromAsset(
           {Key? key,
           BoxFit? fit,
           Color? color,
@@ -1963,6 +1968,7 @@ extension Utils on String {
           AssetBundle? bundle,
           String? semanticLabel,
           bool? gaplessPlayback,
+          ColorFilter? colorFilter,
           bool? matchTextDirection,
           BlendMode? colorBlendMode,
           Animation<double>? opacity,
@@ -1971,30 +1977,42 @@ extension Utils on String {
           AlignmentGeometry? alignment,
           Widget Function(BuildContext, Widget, int?, bool)? frameBuilder,
           Widget Function(BuildContext, Object, StackTrace?)? errorBuilder}) =>
-      Image.asset(this,
-          fit: fit,
-          key: key,
-          width: width,
-          scale: scale,
-          color: color,
-          bundle: bundle,
-          height: height,
-          opacity: opacity,
-          package: package,
-          cacheWidth: cacheWidth,
-          centerSlice: centerSlice,
-          cacheHeight: cacheHeight,
-          errorBuilder: errorBuilder,
-          frameBuilder: frameBuilder,
-          semanticLabel: semanticLabel,
-          colorBlendMode: colorBlendMode,
-          isAntiAlias: isAntiAlias ?? false,
-          repeat: repeat ?? ImageRepeat.noRepeat,
-          alignment: alignment ?? Alignment.center,
-          gaplessPlayback: gaplessPlayback ?? false,
-          matchTextDirection: matchTextDirection ?? false,
-          filterQuality: filterQuality ?? 'low'.filterQuality,
-          excludeFromSemantics: excludeFromSemantics ?? false);
+      isSvg
+          ? SvgPicture.asset(trimmed,
+              key: key,
+              width: width,
+              bundle: bundle,
+              height: height,
+              package: package,
+              colorFilter: colorFilter,
+              fit: fit ?? BoxFit.contain,
+              alignment: alignment ?? Alignment.center,
+              matchTextDirection: matchTextDirection ?? false,
+              excludeFromSemantics: excludeFromSemantics ?? false)
+          : Image.asset(trimmed,
+              fit: fit,
+              key: key,
+              width: width,
+              scale: scale,
+              color: color,
+              bundle: bundle,
+              height: height,
+              opacity: opacity,
+              package: package,
+              cacheWidth: cacheWidth,
+              centerSlice: centerSlice,
+              cacheHeight: cacheHeight,
+              errorBuilder: errorBuilder,
+              frameBuilder: frameBuilder,
+              semanticLabel: semanticLabel,
+              colorBlendMode: colorBlendMode,
+              isAntiAlias: isAntiAlias ?? false,
+              repeat: repeat ?? ImageRepeat.noRepeat,
+              alignment: alignment ?? Alignment.center,
+              gaplessPlayback: gaplessPlayback ?? false,
+              matchTextDirection: matchTextDirection ?? false,
+              filterQuality: filterQuality ?? 'low'.filterQuality,
+              excludeFromSemantics: excludeFromSemantics ?? false);
 
   CrossAxisAlignment? get caa {
     switch (lowerCased.trimmed) {

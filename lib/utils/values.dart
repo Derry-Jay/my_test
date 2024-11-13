@@ -1,19 +1,18 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth_android/src/auth_messages_android.dart';
 import 'package:local_auth_darwin/types/auth_messages_ios.dart';
 import 'package:local_auth_platform_interface/types/auth_messages.dart';
 import 'package:local_auth_windows/types/auth_messages_windows.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../css/assets.dart';
 import '../css/css.dart';
 import '../css/measurements.dart';
 import '../css/shades.dart';
@@ -57,15 +56,14 @@ const authOptions = AuthenticationOptions(),
 
 final css = Css(),
     st = Stopwatch(),
+    assets = Assets(),
     shades = Shades(),
     gco = MyGeocoder(),
     gl = MyGeoLocator(),
     nf = NumberFormat(),
     mp = MyMediaPicker(),
-    conn = Connectivity(),
     today = DateTime.now(),
     fmd1 = DateFormat.MMMd(),
-    // dip = DeviceInfoPlugin(),
     spaceExp = r'\s'.getRE(),
     la = MyLocalAuthentication(),
     thisMoment = TimeOfDay.now(),

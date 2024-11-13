@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:gradient_icon/gradient_icon.dart';
 import 'package:intl/intl.dart';
 
 import '../utils/values.dart';

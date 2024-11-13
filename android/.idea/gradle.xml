@@ -11,9 +11,36 @@
         <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="/opt/homebrew/Caskroom/flutter/3.24.3/flutter/packages/flutter_tools/gradle" name="gradle">
+                <projects>
+                  <project path="/opt/homebrew/Caskroom/flutter/3.24.3/flutter/packages/flutter_tools/gradle" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="jbr-21" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.23/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/geocoding_android-3.3.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/geolocator_android-4.6.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.14.11/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+17/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/local_auth_android-1.0.46/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.12/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-12.0.13/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.3.3/android" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="/opt/homebrew/Caskroom/flutter/3.24.3/flutter/packages/flutter_tools/gradle" />
+          </set>
+        </option>
         <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>

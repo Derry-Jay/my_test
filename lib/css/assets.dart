@@ -1,4 +1,4 @@
-// import '../utils/values.dart';
+import '../utils/values.dart';
 
 class Assets {
   static final Assets _singleton = Assets._internal();
@@ -7,6 +7,6 @@ class Assets {
 
   Assets._internal();
 
-// final splashImage = '${acf.assetImagePath}splash_img.png',
-//     loginLogo = '${acf.assetImagePath}login_logo.png';
+  final flashImage = '${acf.assetImagePath}flash.svg',
+      bigImage = '${acf.assetImagePath}unsupported_device.svg';
 }

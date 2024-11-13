@@ -104,6 +104,6 @@ class CommonState extends JuneState with AnimationLocalStatusListenersMixin {
   }
 
   FutureOr firstScreen() {
-    return bc?.gotoForever('/menu');
+    return bc?.gotoForever('/my');
   }
 }

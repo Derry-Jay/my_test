@@ -15,6 +15,7 @@ class Shades {
       kTeal = Colors.teal,
       kBlack = Colors.black,
       kWhite = Colors.white,
+      kPurple = Colors.purple,
       kOrange = Colors.orange,
       kLightBlue = Colors.lightBlue,
       kDeepPurple = Colors.deepPurple,
