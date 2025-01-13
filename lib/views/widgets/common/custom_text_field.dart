@@ -222,7 +222,8 @@ class CustomTextField extends StatelessWidget {
                     textAlign: textAlign ?? TextAlign.start,
                     enableSuggestions: enableSuggestions ?? true,
                     obscuringCharacter: obscuringCharacter ?? '•',
-                    scrollPadding: scrollPadding ?? measurements.xl2.allPadding,
+                    scrollPadding:
+                        scrollPadding ?? measurements.xl2.allEdgeInsets,
                     enableInteractiveSelection:
                         enableInteractiveSelection ?? true,
                     textCapitalization:
@@ -232,7 +233,8 @@ class CustomTextField extends StatelessWidget {
                     contextMenuBuilder:
                         contextMenuBuilder ?? appleDefaultContextBuilder,
                     padding: padding ??
-                        measurements.appleFieldWithoutBorderPadding.allPadding)
+                        measurements
+                            .appleFieldWithoutBorderPadding.allEdgeInsets)
                 : CupertinoTextField(
                     onTap: onTap,
                     style: style,
@@ -271,9 +273,11 @@ class CustomTextField extends StatelessWidget {
                     textAlign: textAlign ?? TextAlign.start,
                     enableSuggestions: enableSuggestions ?? true,
                     obscuringCharacter: obscuringCharacter ?? '•',
-                    scrollPadding: scrollPadding ?? measurements.xl2.allPadding,
+                    scrollPadding:
+                        scrollPadding ?? measurements.xl2.allEdgeInsets,
                     padding: padding ??
-                        measurements.appleFieldWithoutBorderPadding.allPadding,
+                        measurements
+                            .appleFieldWithoutBorderPadding.allEdgeInsets,
                     enableInteractiveSelection:
                         enableInteractiveSelection ?? true,
                     textCapitalization:
@@ -331,7 +335,7 @@ class CustomTextField extends StatelessWidget {
                 maxLengthEnforcement: maxLengthEnforcement,
                 enableSuggestions: enableSuggestions ?? true,
                 obscuringCharacter: obscuringCharacter ?? '•',
-                scrollPadding: scrollPadding ?? measurements.xl2.allPadding,
+                scrollPadding: scrollPadding ?? measurements.xl2.allEdgeInsets,
                 enableInteractiveSelection: enableInteractiveSelection ?? true,
                 textCapitalization:
                     textCapitalization ?? 'null'.textCapitalization,
@@ -381,7 +385,7 @@ class CustomTextField extends StatelessWidget {
                 maxLengthEnforcement: maxLengthEnforcement,
                 enableSuggestions: enableSuggestions ?? true,
                 obscuringCharacter: obscuringCharacter ?? '•',
-                scrollPadding: scrollPadding ?? measurements.xl2.allPadding,
+                scrollPadding: scrollPadding ?? measurements.xl2.allEdgeInsets,
                 enableInteractiveSelection: enableInteractiveSelection ?? true,
                 textCapitalization:
                     textCapitalization ?? 'null'.textCapitalization,

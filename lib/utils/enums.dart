@@ -1,8 +1,10 @@
-enum APIMode { dev, test, prod }
+enum CardType { filled, outlined }
 
 enum PickType { image, media, video }
 
 enum ButtonType { raised, text, border }
+
+enum APIMode { dev, test, prod, staging }
 
 enum MeasurementUnitGroup { metric, imperial }
 

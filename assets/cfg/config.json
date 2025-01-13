@@ -21,15 +21,35 @@
     "earth_polar_radius": "6356.752",
     "earth_equator_radius": "6378.137",
     "black_color_variant_1": {
-      "alpha": "77",
-      "color": "000000"
+      "alpha": "255",
+      "color": "060606"
+    },
+    "black_color_variant_2": {
+      "alpha": "255",
+      "color": "121212"
+    },
+    "black_color_variant_3": {
+      "alpha": "255",
+      "color": "0C0C0C"
+    },
+    "gold_color_variant_1": {
+      "alpha": "255",
+      "color": "FFB24D"
+    },
+    "green_color_variant_1": {
+      "alpha": "255",
+      "color": "4EA68D"
     },
     "grey_color_variant_1": {
       "alpha": "104",
       "color": "757575"
     },
-    "gold_color_variant_1": {
+    "grey_color_variant_2": {
       "alpha": "255",
-      "color": "FFB24D"
+      "color": "A8A8A8"
+    },
+    "white_color_variant_1": {
+      "alpha": "255",
+      "color": "DCDCDC"
     }
   }

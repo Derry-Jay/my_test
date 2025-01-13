@@ -7,21 +7,10 @@ class Shade {
   final int variantID;
   final String color;
   Shade(this.variantID, this.color);
-  Color get fromConfigs {
-    final cm = gc?.getValue<Map<String, Object?>>(
-            '${color}_color_variant_$variantID') ??
-        <String, Object?>{};
-    '----------------'.jot();
-    cm['color'].jot();
-    '________________'.jot();
-    '----------------'.jot();
-    cm['alpha'].jot();
-    '________________'.jot();
-    '----------------'.jot();
-    jot();
-    '________________'.jot();
-    return cm['color'].string.getColorFromHex(cm['alpha'].string);
-  }
+  Color get fromConfigs => (gc?.getValue<Map<String, Object?>>(
+              '${color}_color_variant_$variantID') ??
+          <String, Object?>{})
+      .fromShadeMap;
 
   @override
   String toString() => 'k${color.firstLetterCapitalized}$variantID';

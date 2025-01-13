@@ -16,8 +16,12 @@ class Measurements {
       nilWb = 0.w,
       unitHt = 1.h,
       unitWb = 1.w,
+      defaultStrokeWidth = 4.w,
+      defaultLoaderHeight = 50.h,
       customStepGranularity = 2.sp,
       toolbarHeight = kToolbarHeight.h,
+      defaultRawMaterialButtonMinWidth = 88.w,
+      defaultRawMaterialButtonMinHeight = 36.h,
       xs = 'xs'.valFromConfig<String>()?.toInt().sp ?? double.nan,
       xl = 'xl'.valFromConfig<String>()?.toInt().sp ?? double.nan,
       xs2 = '2xs'.valFromConfig<String>()?.toInt().sp ?? double.nan,
@@ -31,6 +35,8 @@ class Measurements {
       large = 'large'.valFromConfig<String>()?.toInt().sp ?? double.nan,
       medium = 'medium'.valFromConfig<String>()?.toInt().sp ?? double.nan,
       normal = 'normal'.valFromConfig<String>()?.toInt().sp ?? double.nan,
+      customIconSize = 'xs'.valFromConfig<String>()?.toInt().sp ?? double.nan,
+      defaultIconSize = '4xl'.valFromConfig<String>()?.toInt().h ?? double.nan,
       appleFieldWithoutBorderPadding =
           (('medium'.valFromConfig<String>()?.toDouble(double.nan) ?? double.nan) /
                   2)

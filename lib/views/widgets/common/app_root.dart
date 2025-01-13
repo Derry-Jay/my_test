@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '/extensions/continuations.dart';
 
-import 'utils/values.dart';
+import '/extensions/continuations.dart';
+import '../../../utils/values.dart';
 
 class AppRoot extends StatelessWidget {
   final Widget? home;
@@ -97,9 +97,9 @@ class AppRoot extends StatelessWidget {
             builder: builder,
             theme: themeApple,
             shortcuts: shortcuts,
-            title: title ?? acf.name,
             initialRoute: initialRoute,
             navigatorKey: navigatorKey,
+            title: title ?? acf.fullName,
             scrollBehavior: scrollBehavior,
             onUnknownRoute: onUnknownRoute,
             onGenerateRoute: onGenerateRoute,
@@ -113,8 +113,8 @@ class AppRoot extends StatelessWidget {
             showSemanticsDebugger: showSemanticsDebugger ?? false,
             showPerformanceOverlay: showPerformanceOverlay ?? false,
             localeListResolutionCallback: localeListResolutionCallback,
-            debugShowCheckedModeBanner: debugShowCheckedModeBanner ?? true,
             checkerboardOffscreenLayers: checkerboardOffscreenLayers ?? false,
+            debugShowCheckedModeBanner: debugShowCheckedModeBanner ?? kDebugMode,
             checkerboardRasterCacheImages:
                 checkerboardRasterCacheImages ?? false,
             navigatorObservers:
@@ -131,9 +131,9 @@ class AppRoot extends StatelessWidget {
             shortcuts: shortcuts,
             theme: themeMaterial,
             darkTheme: darkMaterial,
-            title: title ?? acf.name,
             initialRoute: initialRoute,
             navigatorKey: navigatorKey,
+            title: title ?? acf.fullName,
             scrollBehavior: scrollBehavior,
             onUnknownRoute: onUnknownRoute,
             onGenerateRoute: onGenerateRoute,
@@ -153,8 +153,8 @@ class AppRoot extends StatelessWidget {
             showPerformanceOverlay: showPerformanceOverlay ?? false,
             themeAnimationCurve: themeAnimationCurve ?? Curves.linear,
             localeListResolutionCallback: localeListResolutionCallback,
-            debugShowCheckedModeBanner: debugShowCheckedModeBanner ?? true,
             checkerboardOffscreenLayers: checkerboardOffscreenLayers ?? false,
+            debugShowCheckedModeBanner: debugShowCheckedModeBanner ?? kDebugMode,
             checkerboardRasterCacheImages:
                 checkerboardRasterCacheImages ?? false,
             themeAnimationDuration:

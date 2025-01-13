@@ -14,6 +14,7 @@ class Shades {
       kGrey = Colors.grey,
       kTeal = Colors.teal,
       kBlack = Colors.black,
+      kGreen = Colors.green,
       kWhite = Colors.white,
       kPurple = Colors.purple,
       kOrange = Colors.orange,
@@ -21,8 +22,13 @@ class Shades {
       kDeepPurple = Colors.deepPurple,
       kBlueAccent = Colors.blueAccent,
       kTransparent = Colors.transparent,
-      kGrey1 = Shade(1, 'grey').fromConfigs,
       kGold1 = Shade(1, 'gold').fromConfigs,
+      kGrey1 = Shade(1, 'grey').fromConfigs,
+      kGrey2 = Shade(2, 'grey').fromConfigs,
       kBlack1 = Shade(1, 'black').fromConfigs,
+      kBlack2 = Shade(2, 'black').fromConfigs,
+      kBlack3 = Shade(3, 'black').fromConfigs,
+      kGreen1 = Shade(1, 'green').fromConfigs,
+      kWhite1 = Shade(1, 'white').fromConfigs,
       kOrangeAccent = Colors.deepOrangeAccent;
 }

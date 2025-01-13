@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 import '/extensions/extensions.dart';
 import '../models/common/route_argument.dart';
 import '../views/screens/common/error_screen.dart';
-import '../views/screens/common/menu_screen.dart';
 import '../views/screens/common/my_screen.dart';
-import '../views/screens/common/sample_screen.dart';
 import 'enums.dart';
 
 class RouteGenerator {
+  RouteGenerator._internal();
+
   late bool? _shouldPerformTransition;
 
   static final RouteGenerator _singleton = RouteGenerator._internal();
@@ -20,19 +19,13 @@ class RouteGenerator {
     return _singleton;
   }
 
-  RouteGenerator._internal();
-
-  Route<dynamic> generateRoute(RouteSettings settings) {
+  Route<T> generateRoute<T extends Object?>(RouteSettings settings) {
     final args = settings.arguments as RouteArgument?;
 
     Widget pageBuilder(BuildContext context) {
       switch (settings.name) {
         case '/my':
           return const MyScreen();
-        case '/menu':
-          return const MenuScreen();
-        case '/sample':
-          return const SampleScreen();
         default:
           return const ErrorScreen();
       }
@@ -107,14 +100,14 @@ class RouteGenerator {
     switch (defaultTargetPlatform) {
       case TargetPlatform.iOS:
       case TargetPlatform.macOS:
-        return CupertinoPageRoute(builder: pageBuilder, settings: settings);
+        return pageBuilder.getCupertinoPageRoute(settings: settings);
       default:
         return (_shouldPerformTransition ?? false)
             ? PageRouteBuilder(
                 settings: settings,
                 pageBuilder: screenBuilder,
                 transitionsBuilder: transitionBuilder)
-            : MaterialPageRoute(builder: pageBuilder, settings: settings);
+            : pageBuilder.getMaterialPageRoute(settings: settings);
     }
   }
 }

@@ -5,34 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d91fe87-d7d2-4362-9509-4b3e156d7d1e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/com/my/test/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/my/test/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/css/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/css/assets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/css/shades.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/css/shades.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/extensions/continuations.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/extensions/continuations.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/extensions/extensions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/extensions/extensions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/states/common_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/states/common_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/utils/route_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/utils/route_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/utils/values.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/utils/values.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/views/screens/common/menu_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/views/screens/common/menu_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/views/screens/common/sample_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/views/screens/common/sample_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/views/widgets/common/my_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/views/widgets/common/my_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../assets/images/unsupported_device.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/images/unsupported_device.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

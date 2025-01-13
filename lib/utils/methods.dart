@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:june/june.dart';
+import '../blocs/stock_bloc.dart';
+import '../blocs/tab_bloc.dart';
+import 'values.dart';
 
 import '../extensions/extensions.dart';
-import '../states/common_state.dart';
+import '../blocs/icon_bloc.dart';
 import '../views/widgets/common/circular_loader.dart';
 import 'enums.dart';
 
@@ -53,6 +55,14 @@ Widget materialDefaultContextBuilder(
       editableTextState: editableTextState);
 }
 
+BoxConstraints boxConstraints({Size? minimum, Size? maximum}) {
+  return BoxConstraints(
+      maxWidth: maximum?.width ?? double.infinity,
+      maxHeight: maximum?.height ?? double.infinity,
+      minWidth: minimum?.width ?? measurements.nilWb,
+      minHeight: minimum?.height ?? measurements.nilHt);
+}
+
 OverlayEntry overlayLoader({Duration? time, LoaderType? type}) {
   Widget loaderBuilder(BuildContext context) {
     return Positioned(
@@ -61,19 +71,23 @@ OverlayEntry overlayLoader({Duration? time, LoaderType? type}) {
         width: context.width,
         height: context.height,
         child: Material(
-            color: context.themeMaterial.primaryColor.withOpacity(0.5),
+            color: context.themeMaterial.primaryColor.withAlpha(128),
             child: CircularLoader(
                 duration: time,
                 loaderType: type,
                 color: context.themeMaterial.primaryColor)));
   }
 
-  return OverlayEntry(builder: loaderBuilder);
+  return loaderBuilder.getOverLay();
 }
 
 String emptyString() => '';
 
-CommonState obtainCommonState() => CommonState();
+TabBloc getTab(BuildContext context) => TabBloc(context);
+
+IconBloc getIcon(BuildContext context) => IconBloc(context);
+
+StockBloc getStock(BuildContext context) => StockBloc(context);
 
 bool onBadCertificate(X509Certificate cert, String host, int port) {
   return cert.isValid;
@@ -83,10 +97,6 @@ bool isImagePath(String str) {
   str.jot();
   return str.isImagePath;
 }
-
-T getState<T extends JuneState>(T Function() dependency,
-        {String? tag, bool? permanent}) =>
-    June.getState<T>(dependency, tag: tag, permanent: permanent ?? true);
 
 bool predicate(Route<dynamic> route) {
   route.jot();
@@ -138,40 +148,8 @@ bool getBoolData(Map<String, dynamic> data) {
   return (data['data'] as bool);
 }
 
-String getCommonPattern(String s, String t) {
-  int z = 0;
-  List<String> ret = <String>[];
-  List<List<int>> l =
-      List.generate(s.length + 1, (_) => List.filled(t.length + 1, 0));
-
-  for (int i = 1; i <= s.length; i++) {
-    for (int j = 1; j <= t.length; j++) {
-      if (s[i - 1] == t[j - 1]) {
-        if (i == 1 || j == 1) {
-          l[i][j] = 1;
-        } else {
-          l[i][j] = l[i - 1][j - 1] + 1;
-        }
-        if (l[i][j] > z) {
-          z = l[i][j];
-          ret = <String>[s.substring(i - z, i)];
-        } else if (l[i][j] == z) {
-          ret.add(s.substring(i - z, i));
-        }
-      } else {
-        l[i][j] = 0;
-      }
-    }
-  }
-  return ret.singleOrNull ?? '';
-}
-
 Uint8List fromIntList(List<int> list) {
   return getData(list).listData;
-}
-
-Widget numberBuilder(CommonState cm) {
-  return Center(child: cm.ct.string.textWidget());
 }
 
 Widget getImageLoader(BuildContext context, Widget child, int? i, bool flag) {
@@ -185,6 +163,12 @@ Widget getErrorWidget(BuildContext context, Object object, StackTrace? trace) {
   trace.jot();
   return object.string.textWidget();
 }
+
+Widget stocksSeparatorBuilder(BuildContext context, int? i) {
+  return Divider();
+}
+
+String toName(String str) => str.firstLetterCapitalized;
 
 String? validateName(String? name) =>
     (name?.isEmpty ?? true) ? 'Enter a valid Name' : null;

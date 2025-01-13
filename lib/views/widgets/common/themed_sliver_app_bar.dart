@@ -103,11 +103,11 @@ class ThemedSliverAppBar extends StatelessWidget {
         actionsIconTheme: actionsIconTheme,
         forceElevated: forceElevated ?? false,
         systemOverlayStyle: systemOverlayStyle,
-        backgroundColor: context.themeMaterial.primaryColor,
         scrolledUnderElevation: scrolledUnderElevation,
-        foregroundColor: context.themeMaterial.secondaryHeaderColor,
+        backgroundColor: context.themeMaterial.primaryColor,
         excludeHeaderSemantics: excludeHeaderSemantics ?? false,
         toolbarHeight: toolbarHeight ?? measurements.toolbarHeight,
+        foregroundColor: context.themeMaterial.secondaryHeaderColor,
         automaticallyImplyLeading: automaticallyImplyLeading ?? true,
         forceMaterialTransparency: forceMaterialTransparency ?? false,
         stretchTriggerOffset:

@@ -5,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../utils/enums.dart';
 import '../../../../utils/values.dart';
-import '../../../models/common/progress.dart';
 
 class CircularLoader extends StatefulWidget {
   final int? count;
@@ -18,7 +17,6 @@ class CircularLoader extends StatefulWidget {
   final Color? color, trackColor, waveColor;
   final Widget Function(BuildContext, int)? itemBuilder;
   final double? heightFactor, widthFactor, breadth, altitude, value;
-
   const CircularLoader(
       {super.key,
       this.shape,
@@ -45,32 +43,32 @@ class CircularLoader extends StatefulWidget {
 
 class CircularLoaderState extends State<CircularLoader>
     with SingleTickerProviderStateMixin {
-  Widget loaderBuilder(
-      BuildContext context, AsyncSnapshot<Progress> benchMark) {
-    Color c;
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-        c = widget.color ?? context.appleTheme.primaryColor;
-        break;
-      default:
-        c = widget.color ?? context.themeMaterial.primaryColor;
-        break;
-    }
-    return CircularProgressIndicator.adaptive(
-        strokeCap: widget.strokeCap,
-        semanticsLabel: benchMark.data?.label,
-        semanticsValue: benchMark.data?.label,
-        value: benchMark.data?.value.toDouble(),
-        valueColor: AlwaysStoppedAnimation<Color?>(c),
-        strokeWidth: widget.breadth ?? measurements.xs3,
-        backgroundColor: context.themeMaterial.scaffoldBackgroundColor);
-  }
+  // Widget loaderBuilder(
+  //     BuildContext context, AsyncSnapshot<Progress> benchMark) {
+  //   Color c;
+  //   switch (defaultTargetPlatform) {
+  //     case TargetPlatform.iOS:
+  //     case TargetPlatform.macOS:
+  //       c = widget.color ?? context.appleTheme.primaryColor;
+  //       break;
+  //     default:
+  //       c = widget.color ?? context.themeMaterial.primaryColor;
+  //       break;
+  //   }
+  //   return CircularProgressIndicator.adaptive(
+  //       strokeCap: widget.strokeCap,
+  //       strokeWidth: widget.breadth ?? 4.0,
+  //       semanticsLabel: benchMark.data?.label,
+  //       semanticsValue: benchMark.data?.label,
+  //       value: benchMark.data?.value.toDouble(),
+  //       valueColor: AlwaysStoppedAnimation<Color?>(c),
+  //       backgroundColor: context.themeMaterial.scaffoldBackgroundColor);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // final val = cm.animation?.value ?? 100;
-    // final opacity = val > 100.0 ? 1.0 : val / 100;
+    /*final*/ const val = /*cm.animation?.value ??*/ 100;
+    /*final*/ const opacity = val > 100.0 ? 1.0 : val / 100;
     Color c;
     Widget lc;
     switch (defaultTargetPlatform) {
@@ -82,218 +80,198 @@ class CircularLoaderState extends State<CircularLoader>
         c = widget.color ?? context.themeMaterial.primaryColor;
         break;
     }
-    cm.setItemCount(widget.count ?? 5);
     switch (widget.loaderType) {
       case LoaderType.chasingDots:
         lc = SpinKitChasingDots(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ?? const Duration(seconds: 2));
+            duration: widget.duration ?? loaderDur1);
         break;
       case LoaderType.circle:
         lc = SpinKitCircle(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.cubeGrid:
         lc = SpinKitCubeGrid(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.dancingSquare:
         lc = SpinKitDancingSquare(
             color: c,
+            size: widget.altitude ?? 60.0,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultDancingSquareLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.doubleBounce:
         lc = SpinKitDoubleBounce(
             color: c,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            controller: cm.animationController,
-            duration: widget.duration ?? const Duration(seconds: 2));
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
+            // controller: cm.animationController,
+            duration: widget.duration ?? loaderDur1);
         break;
       case LoaderType.dualRing:
         lc = SpinKitDualRing(
             color: c,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            lineWidth: widget.breadth ?? (measurements.medium / 2),
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
+            lineWidth: widget.breadth ?? 7.0,
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.fadingCircle:
         lc = SpinKitFadingCircle(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.fadingCube:
         lc = SpinKitFadingCube(
             color: c,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 2, milliseconds: 400));
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
+            duration: widget.duration ?? loaderDur3);
         break;
       case LoaderType.fadingFour:
         lc = SpinKitFadingFour(
             color: c,
             itemBuilder: widget.itemBuilder,
             shape: widget.shape ?? BoxShape.circle,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2,
+            size: widget.altitude ?? measurements.defaultLoaderHeight);
         break;
       case LoaderType.fadingGrid:
         lc = SpinKitFadingGrid(
             color: c,
             itemBuilder: widget.itemBuilder,
             shape: widget.shape ?? BoxShape.circle,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2,
+            size: widget.altitude ?? measurements.defaultLoaderHeight);
         break;
       case LoaderType.foldingCube:
         lc = SpinKitFoldingCube(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 2, milliseconds: 400));
+            duration: widget.duration ?? loaderDur3);
         break;
       case LoaderType.hourGlass:
         lc = SpinKitHourGlass(
             color: c,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2,
+            size: widget.altitude ?? measurements.defaultLoaderHeight);
         break;
-      case LoaderType.normal:
-        lc = StreamBuilder<Progress>(
-            stream: cm.progress, builder: loaderBuilder);
-        break;
+      // case LoaderType.normal:
+      //   lc = StreamBuilder<Progress>(
+      //       stream: cm.progress, builder: loaderBuilder);
+      //   break;
       case LoaderType.pianoWave:
         lc = SpinKitPianoWave(
             color: c,
-            itemCount: cm.itemCount,
+            itemCount: widget.count ?? 5,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
             type: widget.type1 ?? SpinKitPianoWaveType.start,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.pouringHourGlass:
         lc = SpinKitPouringHourGlass(
             color: c,
             strokeWidth: widget.breadth,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 2, milliseconds: 400));
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
+            duration: widget.duration ?? loaderDur3);
         break;
       case LoaderType.pouringHourGlassRefined:
         lc = SpinKitPouringHourGlassRefined(
             color: c,
             strokeWidth: widget.breadth,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 2, milliseconds: 400));
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
+            duration: widget.duration ?? loaderDur3);
         break;
       case LoaderType.pulse:
         lc = SpinKitPulse(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
             duration: widget.duration ?? const Duration(seconds: 1));
         break;
       case LoaderType.pulsingGrid:
         lc = SpinKitPulsingGrid(
             color: c,
             boxShape: widget.shape,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
             duration: widget.duration ??
                 const Duration(seconds: 1, milliseconds: 500));
         break;
       case LoaderType.pumpingHeart:
         lc = SpinKitPumpingHeart(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 2, milliseconds: 400));
+            duration: widget.duration ?? loaderDur3);
         break;
       case LoaderType.ring:
         lc = SpinKitRing(
             color: c,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            lineWidth: widget.breadth ?? (measurements.medium / 2),
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
+            lineWidth: widget.breadth ?? 7.0,
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.ripple:
         lc = SpinKitRipple(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 800));
+            duration: widget.duration ?? loaderDur4);
         break;
       case LoaderType.rotatingCircle:
         lc = SpinKitRotatingCircle(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.rotatingPlain:
         lc = SpinKitRotatingPlain(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.spinningCircle:
         lc = SpinKitSpinningCircle(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
             shape: widget.shape ?? BoxShape.circle,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.spinningLines:
         lc = SpinKitSpinningLines(
             color: c,
-            itemCount: cm.itemCount,
-            duration: widget.duration ?? const Duration(seconds: 3),
-            size: widget.altitude ?? measurements.defaultSpinLinesHt,
-            lineWidth: widget.breadth ?? measurements.defaultSpinLinesWidth);
+            itemCount: widget.count ?? 5,
+            size: widget.altitude ?? 70.0,
+            lineWidth: widget.breadth ?? 2.0,
+            duration: widget.duration ?? const Duration(seconds: 3));
         break;
       case LoaderType.squareCircle:
         lc = SpinKitSquareCircle(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
             duration: widget.duration ?? const Duration(milliseconds: 500));
         break;
       case LoaderType.threeBounce:
         lc = SpinKitThreeBounce(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
             duration: widget.duration ??
                 const Duration(seconds: 1, milliseconds: 400));
         break;
@@ -301,60 +279,49 @@ class CircularLoaderState extends State<CircularLoader>
         lc = SpinKitThreeInOut(
             color: c,
             itemBuilder: widget.itemBuilder,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             duration: widget.duration ?? const Duration(milliseconds: 500));
         break;
       case LoaderType.wanderingCubes:
         lc = SpinKitWanderingCubes(
             color: c,
             itemBuilder: widget.itemBuilder,
+            duration: widget.duration ?? loaderDur4,
             shape: widget.shape ?? BoxShape.rectangle,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 800));
+            size: widget.altitude ?? measurements.defaultLoaderHeight);
         break;
       case LoaderType.wave:
         lc = SpinKitWave(
             color: c,
-            itemCount: cm.itemCount,
+            itemCount: widget.count ?? 5,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             itemBuilder: widget.itemBuilder,
             type: widget.type2 ?? SpinKitWaveType.start,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
-            duration: widget.duration ??
-                const Duration(seconds: 1, milliseconds: 200));
+            duration: widget.duration ?? loaderDur2);
         break;
       case LoaderType.waveSpinner:
         lc = SpinKitWaveSpinner(
             color: c,
+            size: widget.altitude ?? measurements.defaultLoaderHeight,
             waveColor: widget.waveColor ?? shades.kGrey1,
             trackColor: widget.trackColor ?? shades.kGrey1,
-            size: widget.altitude ?? measurements.defaultLoaderHt,
             duration: widget.duration ?? const Duration(seconds: 3));
         break;
       default:
         lc = CircularProgressIndicator.adaptive(
             strokeCap: widget.strokeCap,
+            strokeWidth: widget.breadth ?? 4.0,
             valueColor: AlwaysStoppedAnimation<Color?>(c),
-            strokeWidth: widget.breadth ?? measurements.xs3,
             backgroundColor: context.themeMaterial.scaffoldBackgroundColor);
+        break;
     }
-    // return AnimatedOpacity(
-    //     opacity: opacity,
-    //     duration:
-    //         widget.duration ?? const Duration(seconds: 1, milliseconds: 530),
-    //     child: Center(
-    //         widthFactor: widget.widthFactor,
-    //         heightFactor: widget.heightFactor,
-    //         child: lc));
-    return Center(
-        widthFactor: widget.widthFactor,
-        heightFactor: widget.heightFactor,
-        child: lc);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    cm.assignState(this);
+    return AnimatedOpacity(
+        opacity: opacity,
+        duration:
+            widget.duration ?? const Duration(seconds: 1, milliseconds: 530),
+        child: Center(
+            widthFactor: widget.widthFactor,
+            heightFactor: widget.heightFactor,
+            child: lc));
   }
 }

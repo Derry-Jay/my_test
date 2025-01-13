@@ -6,20 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:local_auth_android/src/auth_messages_android.dart';
 import 'package:local_auth_darwin/types/auth_messages_ios.dart';
 import 'package:local_auth_platform_interface/types/auth_messages.dart';
 import 'package:local_auth_windows/types/auth_messages_windows.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../css/assets.dart';
+import '../blocs/icon_bloc.dart';
+import '../blocs/stock_bloc.dart';
+import '../blocs/tab_bloc.dart';
 import '../css/css.dart';
 import '../css/measurements.dart';
 import '../css/shades.dart';
 import '../extensions/extensions.dart';
 import '../models/common/app_config.dart';
 import '../models/common/progress.dart';
-import '../states/common_state.dart';
 import 'enums.dart';
 import 'methods.dart';
 import 'my_geo_locator.dart';
@@ -45,7 +48,11 @@ StreamSubscription<Progress>? ssc;
 
 Map<String, dynamic> body = <String, dynamic>{};
 
-const authOptions = AuthenticationOptions(),
+const loaderDur1 = Duration(seconds: 2),
+    authOptions = AuthenticationOptions(),
+    loaderDur2 = Duration(seconds: 1, milliseconds: 200),
+    loaderDur3 = Duration(seconds: 2, milliseconds: 400),
+    loaderDur4 = Duration(seconds: 1, milliseconds: 800),
     apiMode =
         kDebugMode ? APIMode.dev : (kProfileMode ? APIMode.test : APIMode.prod),
     authMsgs = <AuthMessages>[
@@ -56,15 +63,14 @@ const authOptions = AuthenticationOptions(),
 
 final css = Css(),
     st = Stopwatch(),
-    assets = Assets(),
     shades = Shades(),
     gco = MyGeocoder(),
     gl = MyGeoLocator(),
     nf = NumberFormat(),
     mp = MyMediaPicker(),
-    today = DateTime.now(),
     fmd1 = DateFormat.MMMd(),
     spaceExp = r'\s'.getRE(),
+    mpp = MyPolylinePoints(),
     la = MyLocalAuthentication(),
     thisMoment = TimeOfDay.now(),
     sc = TextEditingController(),
@@ -77,12 +83,17 @@ final css = Css(),
     edc = TextEditingController(),
     rg = RouteGenerator(flag: true),
     isPortable = isAndroid || isIOS,
-    mpp = MyPolylinePoints(),
     alphaNumExp = r'^[a-zA-Z0-9]+$'.getRE(),
-    cm = getState<CommonState>(obtainCommonState),
     sharedPrefs = SharedPreferences.getInstance(),
     isIOS = Platform.isIOS && defaultTargetPlatform == TargetPlatform.iOS,
     minPwdLth = 'minimum_password_length'.valFromConfig<String>()?.toInt() ?? 8,
+    today = DateTime.now()
+        .year
+        .getDate(month: DateTime.now().month, day: DateTime.now().day),
+    yesterday = DateTime.now()
+        .year
+        .getDate(month: DateTime.now().month, day: DateTime.now().day)
+        .subtract(Duration(days: 1)),
     isAndroid =
         Platform.isAndroid && defaultTargetPlatform == TargetPlatform.android,
     isWindows =
@@ -105,4 +116,9 @@ final css = Css(),
     minDesignSize = <double>[
       'minimum_screen_width'.valFromConfig<String>()?.toDouble() ?? double.nan,
       'minimum_screen_height'.valFromConfig<String>()?.toDouble() ?? double.nan
-    ].size;
+    ].size,
+    providers = <SingleChildWidget>[
+      BlocProvider<TabBloc>(create: getTab),
+      BlocProvider<IconBloc>(create: getIcon),
+      BlocProvider<StockBloc>(create: getStock)
+    ];

@@ -9,7 +9,7 @@ class MyButton extends StatelessWidget {
   final Widget? child;
   final ButtonType? type;
   final VoidCallback? onPressed;
-  const MyButton({super.key, this.type, this.child, required this.onPressed});
+  const MyButton({super.key, this.type, this.child, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,11 @@ class MyButton extends StatelessWidget {
         style: ButtonStyle(
             shape:
                 RoundedRectangleBorder(borderRadius: 4.0.circularBorderRadius)
-                    .getWSP<OutlinedBorder?>(),
-            fixedSize:
-                Size(context.width * 0.9, context.height / 16).getWSP<Size?>(),
-            foregroundColor: shades.kWhite.getWSP<Color?>(),
-            backgroundColor: shades.kPurple.getWSP<Color?>()),
+                    .allWidgetStateProperty<OutlinedBorder?>(),
+            fixedSize: Size(context.width * 0.9, context.height / 16)
+                .allWidgetStateProperty<Size?>(),
+            foregroundColor: shades.kWhite.allWidgetStateProperty<Color?>(),
+            backgroundColor: shades.kPurple.allWidgetStateProperty<Color?>()),
         child: child);
   }
 }
