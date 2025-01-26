@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,7 +6,6 @@ import '../../../blocs/stock_bloc.dart';
 import '../../../extensions/extensions.dart';
 import '../../../models/stocks/stock.dart';
 import '../../../utils/methods.dart';
-import '../common/circular_loader.dart';
 import 'stock_item_widget.dart';
 
 class StocksListWidget extends StatefulWidget {
@@ -23,7 +23,7 @@ class _StocksListWidgetState extends State<StocksListWidget> {
     }
 
     return stocks == null
-        ? const CircularLoader()
+        ? const RoundLoader()
         : ListView.separated(
             itemBuilder: itemBuilder,
             itemCount: stocks.length,

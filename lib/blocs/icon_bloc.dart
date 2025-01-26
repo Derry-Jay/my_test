@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,8 +8,6 @@ import '../events/movers_state.dart';
 import '../events/orders_state.dart';
 import '../events/portfolio_state.dart';
 import '../events/watch_list_state.dart';
-import '../utils/keys.dart';
-import '../utils/values.dart';
 
 class IconBloc extends Bloc<IconState, int> {
   late BuildContext _buildContext;

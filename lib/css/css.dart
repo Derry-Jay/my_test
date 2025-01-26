@@ -1,30 +1,25 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../extensions/continuations.dart';
-import '../extensions/extensions.dart';
-import '../utils/values.dart';
+import '../data/values.dart';
 
 class Css {
+  Css._internal();
+
   static final Css _singleton = Css._internal();
 
   factory Css() => _singleton;
 
-  Css._internal();
-
   final zeroPadding = EdgeInsets.zero,
-      cupertinoFieldPlaceHolderStyleDefault =
-          'roboto'.getStyleFromFont(color: CupertinoColors.placeholderText),
-      stockSubscriptStyle = 'ubuntu'.getStyleFromFont(
-          color: shades.kWhite1, fontSize: measurements.small),
+      stockSubscriptStyle = 'ubuntu'
+          .getStyleFromFont(color: shades.kWhite1, fontSize: dimensions.small),
       stockInfoStyle = 'ubuntu'
-          .getStyleFromFont(color: shades.kGrey, fontSize: measurements.xs),
+          .getStyleFromFont(color: rainbow.kGrey, fontSize: dimensions.xs),
       stockTitleStyle = 'ubuntu'.getStyleFromFont(
           color: shades.kWhite1,
-          fontSize: measurements.medium,
-          fontWeight: 600.fontWeight),
-      defaultAppleAppBarBorder = Border(
-          bottom: BorderSide(color: shades.kBlack1, width: measurements.nilWb)),
+          fontWeight: 600.fontWeight,
+          fontSize: dimensions.medium),
       theme = ThemeData(
           useMaterial3: true,
           dividerColor: shades.kGrey2,
@@ -33,33 +28,33 @@ class Css {
           appBarTheme: AppBarTheme(
               elevation: 0,
               centerTitle: false,
-              backgroundColor: shades.kBlack,
+              backgroundColor: rainbow.kBlack,
               foregroundColor: shades.kWhite1,
               titleTextStyle: 'ubuntu'.getStyleFromFont(
                   color: shades.kWhite1,
-                  fontSize: measurements.xl,
+                  fontSize: dimensions.xl,
                   fontWeight: 700.fontWeight)),
           tabBarTheme: TabBarTheme(
-              labelColor: shades.kGreen,
-              dividerColor: shades.kBlack,
-              indicatorColor: shades.kGreen,
+              labelColor: rainbow.kGreen,
+              dividerColor: rainbow.kBlack,
+              indicatorColor: rainbow.kGreen,
               labelPadding: EdgeInsets.zero,
               unselectedLabelColor: shades.kWhite1,
               labelStyle:
-                  'ubuntu'.getStyleFromFont(fontSize: measurements.normal),
+                  'ubuntu'.getStyleFromFont(fontSize: dimensions.normal),
               unselectedLabelStyle:
-                  'ubuntu'.getStyleFromFont(fontSize: measurements.normal)),
+                  'ubuntu'.getStyleFromFont(fontSize: dimensions.normal)),
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
               showSelectedLabels: true,
               showUnselectedLabels: true,
               backgroundColor: shades.kBlack2,
-              selectedItemColor: shades.kGreen,
+              selectedItemColor: rainbow.kGreen,
               type: BottomNavigationBarType.fixed,
               unselectedItemColor: shades.kWhite1,
               selectedLabelStyle:
-                  'ubuntu'.getStyleFromFont(fontSize: measurements.normal),
+                  'ubuntu'.getStyleFromFont(fontSize: dimensions.normal),
               unselectedLabelStyle:
-                  'ubuntu'.getStyleFromFont(fontSize: measurements.normal)),
+                  'ubuntu'.getStyleFromFont(fontSize: dimensions.normal)),
           inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: shades.kBlack2,

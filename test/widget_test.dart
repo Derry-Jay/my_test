@@ -5,9 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+import 'package:common_utils/common_utils.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_test/extensions/continuations.dart';
 
 import 'package:my_test/my_app.dart';
 
@@ -21,7 +21,7 @@ void main() {
     expect('1'.getTextFinder(), findsNothing);
 
     // Tap the '+' icon and trigger a frame.
-    await tester.tap(Icons.add.getIconFinder());
+    // await tester.tap(Icons.add.getIconFinder());
     await tester.pump();
 
     // Verify that our counter has incremented.

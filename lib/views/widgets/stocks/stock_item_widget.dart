@@ -1,9 +1,8 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../../extensions/continuations.dart';
-import '../../../extensions/extensions.dart';
+import '../../../data/values.dart';
 import '../../../models/stocks/stock.dart';
-import '../../../utils/values.dart';
 
 class StockItemWidget extends StatelessWidget {
   final int idx;
@@ -26,7 +25,7 @@ class StockItemWidget extends StatelessWidget {
                           : Icons.dehaze_sharp))
                   .iconBuilder(
                       color: stock.variation > 0
-                          ? shades.kGreen
+                          ? rainbow.kGreen
                           : (stock.variation < 0
                               ? context.themeMaterial.colorScheme.error
                               : shades.kWhite1))
@@ -35,7 +34,7 @@ class StockItemWidget extends StatelessWidget {
                   .textWidget(
                       style: css.stockTitleStyle.copyWith(
                           color: stock.variation > 0
-                              ? shades.kGreen
+                              ? rainbow.kGreen
                               : (stock.variation < 0
                                   ? context.themeMaterial.colorScheme.error
                                   : shades.kWhite1)))
@@ -56,7 +55,7 @@ class StockItemWidget extends StatelessWidget {
                             .wrapWithFlexible(),
                         <Widget>[
                           Icons.business_center_outlined
-                              .iconBuilder(color: shades.kGrey)
+                              .iconBuilder(color: rainbow.kGrey)
                               .wrapWithFlexible(),
                           stock.count.string
                               .textWidget(style: css.stockInfoStyle)
@@ -67,7 +66,8 @@ class StockItemWidget extends StatelessWidget {
                             .wrapWithFlexible()
                       ].placeWidgetsHorizontally(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween)
-                    : stock.type.upperCased.textWidget(style: css.stockSubscriptStyle))
+                    : stock.type.upperCased
+                        .textWidget(style: css.stockSubscriptStyle))
                 .wrapWithFlexible(),
             '${stock.variation > 0 ? "+" : ""}${stock.variation} (${stock.variationPercent}%)'
                 .textWidget(style: css.stockInfoStyle)

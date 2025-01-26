@@ -1,17 +1,14 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/values.dart';
 import '../events/bank_nifty_state.dart';
 import '../events/nifty_state.dart';
 import '../events/sensex_state.dart';
 import '../events/tab_state.dart';
 import '../events/two_state.dart';
-import '../extensions/continuations.dart';
 import '../extensions/extensions.dart';
-import '../utils/keys.dart';
-import '../utils/values.dart';
-import '../views/widgets/common/custom_text_field.dart';
-import '../views/widgets/common/empty_widget.dart';
 import '../views/widgets/stocks/stocks_list_widget.dart';
 
 class TabBloc extends Bloc<TabState, int> {
@@ -69,15 +66,15 @@ class TabBloc extends Bloc<TabState, int> {
                         Container(
                             height: 39.5,
                             color: shades.kWhite1,
-                            width: measurements.unitWb,
+                            width: dimensions.unitWb,
                             margin: EdgeInsets.only(bottom: 5)),
                         Icons.apps.iconBuilder(
                             size: measurements.customIconSize,
-                            color: shades.kGreen),
+                            color: rainbow.kGreen),
                         90.rotatedTransform(
                             child: Icons.tune_outlined.iconBuilder(
                                 size: measurements.customIconSize,
-                                color: shades.kGreen)),
+                                color: rainbow.kGreen)),
                         EmptyWidget(),
                         EmptyWidget(),
                         EmptyWidget(),
@@ -86,7 +83,7 @@ class TabBloc extends Bloc<TabState, int> {
                         EmptyWidget(),
                         EmptyWidget()
                       ].placeWidgetsHorizontally(
-                          spacing: measurements.unitWb,
+                          spacing: dimensions.unitWb,
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.end)),
                 ))
@@ -99,7 +96,7 @@ class TabBloc extends Bloc<TabState, int> {
                 decoration: null.boxDecoration(color: shades.kBlack2),
                 width: (navKey.currentState?.context.width ?? 0) / 3.2768,
                 child: <Widget>[
-                  Icons.edit_square.iconBuilder(color: shades.kGreen),
+                  Icons.edit_square.iconBuilder(color: rainbow.kGreen),
                   'Edit Watchlist'.textWidget(style: css.stockSubscriptStyle)
                 ].placeWidgetsHorizontally(
                     spacing: 5, mainAxisAlignment: MainAxisAlignment.center))

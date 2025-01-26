@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,8 +7,6 @@ import '../events/loaded_state.dart';
 import '../events/loading_state.dart';
 import '../events/stocks_state.dart';
 import '../models/stocks/stock.dart';
-import '../utils/keys.dart';
-import '../utils/values.dart';
 
 class StockBloc extends Bloc<StocksState, Iterable<Stock>?> {
   late BuildContext _buildContext;

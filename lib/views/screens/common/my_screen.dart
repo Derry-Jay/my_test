@@ -1,10 +1,11 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/icon_bloc.dart';
+import '../../../data/values.dart';
 import '../../../extensions/extensions.dart';
 
 import '../../../blocs/tab_bloc.dart';
-import '../../../utils/values.dart';
 
 class MyScreen extends StatelessWidget {
   const MyScreen({super.key});
@@ -42,10 +43,11 @@ class MyScreen extends StatelessWidget {
                               .placeWidgetsInTab()
                               .wrapWithExpanded(flex: 3),
                           Icons.ballot_outlined
-                              .iconBuilder(color: shades.kGreen)
+                              .iconBuilder(color: rainbow.kGreen)
                               .wrapWithFlexible()
                         ].placeWidgetsHorizontally(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween))))
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween))))
             .wrapWithinSafeArea());
   }
 

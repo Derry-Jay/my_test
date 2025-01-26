@@ -1,7 +1,5 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-
-import '../../../extensions/extensions.dart';
-import '../../../utils/values.dart';
 
 class Shade {
   final int variantID;

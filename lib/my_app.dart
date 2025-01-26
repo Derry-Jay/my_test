@@ -1,13 +1,12 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '/extensions/extensions.dart';
+import 'data/values.dart';
+// import '/extensions/extensions.dart';
 import 'views/screens/common/my_screen.dart';
-import 'views/widgets/common/app_root.dart';
-import 'utils/keys.dart';
-import 'utils/values.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navKey,
         themeMaterial: css.theme,
         themeApple: css.appleTheme,
-        onGenerateRoute: rg.generateRoute,
+        // onGenerateRoute: rg.generateRoute,
         debugShowCheckedModeBanner: kDebugMode);
   }
 
