@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
         themeMaterial: css.theme,
         themeApple: css.appleTheme,
         onGenerateRoute: rg.generateRoute,
-        title: 'name'.valFromConfig<String>(),
         debugShowCheckedModeBanner: kDebugMode);
   }
 

@@ -7,6 +7,9 @@ class Assets {
 
   Assets._internal();
 
-  final flashImage = '${acf.assetImagePath}flash.svg',
+  final tick = '${acf.assetImagePath}Path.svg',
+      flashImage = '${acf.assetImagePath}flash.svg',
+      exitFlow = '${acf.assetImagePath}Exitflow.svg',
+      paperClip = '${acf.assetImagePath}paperclip-2.svg',
       bigImage = '${acf.assetImagePath}unsupported_device.svg';
 }

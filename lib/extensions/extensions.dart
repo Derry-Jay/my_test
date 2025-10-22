@@ -5,10 +5,10 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
-// import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +21,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_platform_interface/types/auth_messages.dart';
@@ -38,24 +39,12 @@ import '../views/widgets/common/custom_button.dart';
 import '../views/widgets/common/empty_widget.dart';
 import 'continuations.dart';
 
-extension WidUt on Widget {
-  Expanded wrapWithExpanded({Key? key, int? flex}) =>
-      Expanded(flex: flex ?? 1, child: this);
-
-  Flexible wrapWithFlexible({Key? key, int? flex, FlexFit? fit}) =>
-      Flexible(flex: flex ?? 1, fit: fit ?? FlexFit.loose, child: this);
-}
-
 extension Pos on Position {
   LatLng get ll => LatLng(latitude, longitude);
 }
 
 extension Co on Radius {
   BorderRadius get all => BorderRadius.all(this);
-}
-
-extension CamUp on CameraPosition {
-  CameraUpdate get cameraUpdate => CameraUpdate.newCameraPosition(this);
 }
 
 extension Pad on EdgeInsetsGeometry {
@@ -87,46 +76,11 @@ extension Assistant on AxisDirection {
   bool get isReversed => axisDirectionIsReversed(this);
 }
 
-extension Time on Duration {
-  Timer getTimer(VoidCallback callback) => Timer(this, callback);
+extension Use<T extends Iterable<U>, U extends Object?> on T {
+  bool get isSingle => length == 1;
 
-  Timer getPeriodicTimer(void Function(Timer) callback) =>
-      Timer.periodic(this, callback);
-
-  AnimatedContainer getAnimatedContainer(
-      {Curve? curve,
-      Color? color,
-      Widget? child,
-      double? width,
-      double? height,
-      Clip? clipBehavior,
-      Matrix4? transform,
-      VoidCallback? onEnd,
-      Decoration? decoration,
-      EdgeInsetsGeometry? margin,
-      BoxConstraints? constraints,
-      EdgeInsetsGeometry? padding,
-      AlignmentGeometry? alignment,
-      Decoration? foregroundDecoration,
-      AlignmentGeometry? transformAlignment}) {
-    return AnimatedContainer(
-        color: color,
-        onEnd: onEnd,
-        width: width,
-        duration: this,
-        height: height,
-        margin: margin,
-        padding: padding,
-        alignment: alignment,
-        transform: transform,
-        decoration: decoration,
-        constraints: constraints,
-        curve: curve ?? Curves.linear,
-        transformAlignment: transformAlignment,
-        clipBehavior: clipBehavior ?? Clip.none,
-        foregroundDecoration: foregroundDecoration,
-        child: child);
-  }
+  List<U> sortedElements([int Function(U, U)? compare]) =>
+      <U>[...this]..sort(compare);
 }
 
 extension Subordinate on HttpClientResponse {
@@ -154,6 +108,75 @@ extension Zxcvbnm on PolylineRequest {
 
   Future obtainRouteBetweenLatLong({String? googleApiKey}) =>
       mpp.getRouteBetweenCoordinates(request: this, googleApiKey: googleApiKey);
+}
+
+extension ListStringUtils on Iterable<String> {
+  Set<String> get commonPattern {
+    Set<String> rs = <String>{};
+    if (isEmpty) {
+    } else if (isSingle) {
+      rs = <String>{single};
+    } else {
+      final List<String> l = <String>[...this];
+      for (String str in this) {
+        final int i = l.indexOf(str), next = i + 1;
+        rs = next == length
+            ? rs
+            : rs.union(<String>{l[i].getCommonPattern(l[next])});
+      }
+    }
+    return rs;
+  }
+}
+
+extension GradUt on Iterable<Color> {
+  LinearGradient linearGradient(
+          {TileMode? tileMode,
+          List<double>? stops,
+          AlignmentGeometry? end,
+          AlignmentGeometry? begin,
+          GradientTransform? transform}) =>
+      LinearGradient(
+          stops: stops,
+          colors: toList(),
+          transform: transform,
+          end: end ?? Alignment.centerRight,
+          begin: begin ?? Alignment.centerLeft,
+          tileMode: tileMode ?? TileMode.clamp);
+
+  RadialGradient radialGradient(
+          {double? radius,
+          TileMode? tileMode,
+          double? focalRadius,
+          List<double>? stops,
+          AlignmentGeometry? focal,
+          AlignmentGeometry? centre,
+          GradientTransform? transform}) =>
+      RadialGradient(
+          focal: focal,
+          stops: stops,
+          colors: toList(),
+          transform: transform,
+          radius: radius ?? 0.5,
+          focalRadius: focalRadius ?? 0.0,
+          center: centre ?? Alignment.center,
+          tileMode: tileMode ?? TileMode.clamp);
+
+  SweepGradient sweepGradient(
+          {double? endAngle,
+          double? startAngle,
+          TileMode? tileMode,
+          List<double>? stops,
+          AlignmentGeometry? centre,
+          GradientTransform? transform}) =>
+      SweepGradient(
+          stops: stops,
+          colors: toList(),
+          transform: transform,
+          center: centre ?? Alignment.center,
+          tileMode: tileMode ?? TileMode.clamp,
+          endAngle: endAngle?.radians.float ?? (pi * 2),
+          startAngle: (startAngle ?? 0.0).radians.float);
 }
 
 extension Decor on ImageProvider {
@@ -218,30 +241,260 @@ extension E1 on void Function(DateTime) {
               itemExtent ?? measurements.defaultAppleDatePickerItemExtent);
 }
 
-extension ListStringUtils on Iterable<String> {
-  Set<String> get commonPattern {
-    Set<String> rs = <String>{};
-    if (isEmpty) {
-    } else if (length == 1) {
-      rs = <String>{single};
-    } else {
-      final l = [...this];
-      for (String str in this) {
-        final i = l.indexOf(str);
-        if (i + 1 == length) {
-        } else {
-          '----------------'.jot();
-          l[i].jot();
-          '________________'.jot();
-          '---------------'.jot();
-          l[i + 1].jot();
-          '________________'.jot();
-          rs = rs.union(<String>{getCommonPattern(l[i], l[i + 1])});
-        }
-      }
-    }
-    rs.jot();
-    return rs;
+extension CamUp on CameraPosition {
+  CameraUpdate get cameraUpdate => CameraUpdate.newCameraPosition(this);
+
+  GoogleMap googleMap(
+          {Key? key,
+          String? style,
+          MapType? mapType,
+          String? cloudMapId,
+          EdgeInsets? padding,
+          Set<Circle>? circles,
+          bool? compassEnabled,
+          Set<Marker>? markers,
+          bool? trafficEnabled,
+          bool? liteModeEnabled,
+          bool? buildingsEnabled,
+          Set<Heatmap>? heatmaps,
+          Set<Polygon>? polygons,
+          bool? indoorViewEnabled,
+          bool? mapToolbarEnabled,
+          bool? myLocationEnabled,
+          Set<Polyline>? polylines,
+          bool? tiltGesturesEnabled,
+          bool? zoomControlsEnabled,
+          bool? zoomGesturesEnabled,
+          VoidCallback? onCameraIdle,
+          bool? rotateGesturesEnabled,
+          bool? scrollGesturesEnabled,
+          void Function(LatLng)? onTap,
+          bool? myLocationButtonEnabled,
+          TextDirection? layoutDirection,
+          Set<TileOverlay>? tileOverlays,
+          VoidCallback? onCameraMoveStarted,
+          void Function(LatLng)? onLongPress,
+          bool? fortyFiveDegreeImageryEnabled,
+          Set<ClusterManager>? clusterManagers,
+          CameraTargetBounds? cameraTargetBounds,
+          WebGestureHandling? webGestureHandling,
+          MinMaxZoomPreference? minMaxZoomPreference,
+          void Function(CameraPosition)? onCameraMove,
+          void Function(GoogleMapController)? onMapCreated,
+          Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers}) =>
+      GoogleMap(
+          key: key,
+          onTap: onTap,
+          style: style,
+          cloudMapId: cloudMapId,
+          onLongPress: onLongPress,
+          onCameraIdle: onCameraIdle,
+          onCameraMove: onCameraMove,
+          onMapCreated: onMapCreated,
+          initialCameraPosition: this,
+          layoutDirection: layoutDirection,
+          mapType: mapType ?? MapType.normal,
+          padding: padding ?? EdgeInsets.zero,
+          circles: circles ?? const <Circle>{},
+          markers: markers ?? const <Marker>{},
+          compassEnabled: compassEnabled ?? true,
+          webGestureHandling: webGestureHandling,
+          heatmaps: heatmaps ?? const <Heatmap>{},
+          polygons: polygons ?? const <Polygon>{},
+          trafficEnabled: trafficEnabled ?? false,
+          onCameraMoveStarted: onCameraMoveStarted,
+          liteModeEnabled: liteModeEnabled ?? false,
+          buildingsEnabled: buildingsEnabled ?? true,
+          polylines: polylines ?? const <Polyline>{},
+          mapToolbarEnabled: mapToolbarEnabled ?? true,
+          indoorViewEnabled: indoorViewEnabled ?? false,
+          myLocationEnabled: myLocationEnabled ?? false,
+          tiltGesturesEnabled: tiltGesturesEnabled ?? true,
+          zoomControlsEnabled: zoomControlsEnabled ?? true,
+          zoomGesturesEnabled: zoomGesturesEnabled ?? true,
+          tileOverlays: tileOverlays ?? const <TileOverlay>{},
+          rotateGesturesEnabled: rotateGesturesEnabled ?? true,
+          scrollGesturesEnabled: scrollGesturesEnabled ?? true,
+          myLocationButtonEnabled: myLocationButtonEnabled ?? true,
+          clusterManagers: clusterManagers ?? const <ClusterManager>{},
+          fortyFiveDegreeImageryEnabled: fortyFiveDegreeImageryEnabled ?? false,
+          gestureRecognizers: gestureRecognizers ??
+              const <Factory<OneSequenceGestureRecognizer>>{},
+          cameraTargetBounds:
+              cameraTargetBounds ?? CameraTargetBounds.unbounded,
+          minMaxZoomPreference:
+              minMaxZoomPreference ?? MinMaxZoomPreference.unbounded);
+}
+
+extension WidUt<T extends Widget> on T {
+  Expanded wrapWithExpanded({Key? key, int? flex}) =>
+      Expanded(flex: flex ?? 1, child: this);
+
+  Flexible wrapWithFlexible({Key? key, int? flex, FlexFit? fit}) =>
+      Flexible(flex: flex ?? 1, fit: fit ?? FlexFit.loose, child: this);
+
+  Chip chip(
+          {Key? key,
+          Color? color,
+          Widget? avatar,
+          bool? autofocus,
+          BorderSide? side,
+          double? elevation,
+          Clip? clipBehavior,
+          Widget? deleteIcon,
+          Color? shadowColor,
+          FocusNode? focusNode,
+          TextStyle? labelStyle,
+          OutlinedBorder? shape,
+          Color? backgroundColor,
+          Color? deleteIconColor,
+          Color? surfaceTintColor,
+          VoidCallback? onDeleted,
+          IconThemeData? iconTheme,
+          EdgeInsetsGeometry? padding,
+          VisualDensity? visualDensity,
+          EdgeInsetsGeometry? labelPadding,
+          String? deleteButtonTooltipMessage,
+          BoxConstraints? avatarBoxConstraints,
+          ChipAnimationStyle? chipAnimationStyle,
+          BoxConstraints? deleteIconBoxConstraints,
+          MaterialTapTargetSize? materialTapTargetSize}) =>
+      Chip(
+          key: key,
+          side: side,
+          label: this,
+          shape: shape,
+          avatar: avatar,
+          padding: padding,
+          elevation: elevation,
+          focusNode: focusNode,
+          iconTheme: iconTheme,
+          onDeleted: onDeleted,
+          deleteIcon: deleteIcon,
+          labelStyle: labelStyle,
+          shadowColor: shadowColor,
+          labelPadding: labelPadding,
+          visualDensity: visualDensity,
+          autofocus: autofocus ?? false,
+          color: color?.getWSP<Color?>(),
+          backgroundColor: backgroundColor,
+          deleteIconColor: deleteIconColor,
+          surfaceTintColor: surfaceTintColor,
+          chipAnimationStyle: chipAnimationStyle,
+          clipBehavior: clipBehavior ?? Clip.none,
+          avatarBoxConstraints: avatarBoxConstraints,
+          materialTapTargetSize: materialTapTargetSize,
+          deleteIconBoxConstraints: deleteIconBoxConstraints,
+          deleteButtonTooltipMessage: deleteButtonTooltipMessage);
+
+  FilterChip filterChip(
+          {Key? key,
+          Color? color,
+          Widget? avatar,
+          bool? selected,
+          bool? autofocus,
+          BorderSide? side,
+          double? elevation,
+          Clip? clipBehavior,
+          Widget? deleteIcon,
+          Color? shadowColor,
+          bool? showCheckmark,
+          FocusNode? focusNode,
+          Color? selectedColor,
+          Color? disabledColor,
+          Color? checkmarkColor,
+          TextStyle? labelStyle,
+          OutlinedBorder? shape,
+          Color? backgroundColor,
+          Color? deleteIconColor,
+          Color? surfaceTintColor,
+          VoidCallback? onDeleted,
+          IconThemeData? iconTheme,
+          Color? selectedShadowColor,
+          EdgeInsetsGeometry? padding,
+          VisualDensity? visualDensity,
+          void Function(bool)? onSelected,
+          EdgeInsetsGeometry? labelPadding,
+          String? deleteButtonTooltipMessage,
+          BoxConstraints? avatarBoxConstraints,
+          ChipAnimationStyle? chipAnimationStyle,
+          BoxConstraints? deleteIconBoxConstraints,
+          MaterialTapTargetSize? materialTapTargetSize}) =>
+      FilterChip(
+          key: key,
+          side: side,
+          label: this,
+          shape: shape,
+          avatar: avatar,
+          padding: padding,
+          elevation: elevation,
+          focusNode: focusNode,
+          iconTheme: iconTheme,
+          onDeleted: onDeleted,
+          deleteIcon: deleteIcon,
+          labelStyle: labelStyle,
+          onSelected: onSelected,
+          shadowColor: shadowColor,
+          labelPadding: labelPadding,
+          selected: selected ?? false,
+          disabledColor: disabledColor,
+          selectedColor: selectedColor,
+          showCheckmark: showCheckmark,
+          visualDensity: visualDensity,
+          autofocus: autofocus ?? false,
+          checkmarkColor: checkmarkColor,
+          color: color?.getWSP<Color?>(),
+          backgroundColor: backgroundColor,
+          deleteIconColor: deleteIconColor,
+          surfaceTintColor: surfaceTintColor,
+          chipAnimationStyle: chipAnimationStyle,
+          clipBehavior: clipBehavior ?? Clip.none,
+          selectedShadowColor: selectedShadowColor,
+          avatarBoxConstraints: avatarBoxConstraints,
+          materialTapTargetSize: materialTapTargetSize,
+          deleteIconBoxConstraints: deleteIconBoxConstraints,
+          deleteButtonTooltipMessage: deleteButtonTooltipMessage);
+}
+
+extension DurationUt on Duration {
+  Timer getTimer(VoidCallback callback) => Timer(this, callback);
+
+  Timer getPeriodicTimer(void Function(Timer) callback) =>
+      Timer.periodic(this, callback);
+
+  AnimatedContainer animatedContainer(
+      {Curve? curve,
+      Color? color,
+      Widget? child,
+      double? width,
+      double? height,
+      Clip? clipBehavior,
+      Matrix4? transform,
+      VoidCallback? onEnd,
+      Decoration? decoration,
+      EdgeInsetsGeometry? margin,
+      BoxConstraints? constraints,
+      EdgeInsetsGeometry? padding,
+      AlignmentGeometry? alignment,
+      Decoration? foregroundDecoration,
+      AlignmentGeometry? transformAlignment}) {
+    return AnimatedContainer(
+        color: color,
+        onEnd: onEnd,
+        width: width,
+        duration: this,
+        height: height,
+        margin: margin,
+        padding: padding,
+        alignment: alignment,
+        transform: transform,
+        decoration: decoration,
+        constraints: constraints,
+        curve: curve ?? Curves.linear,
+        transformAlignment: transformAlignment,
+        clipBehavior: clipBehavior ?? Clip.none,
+        foregroundDecoration: foregroundDecoration,
+        child: child);
   }
 }
 
@@ -256,9 +509,11 @@ extension Deputy on double {
 
   Size get sizeFromRadius => Size.fromRadius(this);
 
-  EdgeInsets get allPadding => EdgeInsets.all(this);
-
   Radius get circularRadius => Radius.circular(this);
+
+  EdgeInsets get allEdgeInsets => EdgeInsets.all(this);
+
+  GradientRotation get gradientRotation => GradientRotation(radians.float);
 
   double get decimalPart {
     final self = this;
@@ -332,6 +587,299 @@ extension Cover on InlineSpan {
           textAlign: textAlign ?? TextAlign.start,
           textScaler: textScaler ?? TextScaler.noScaling,
           textWidthBasis: textWidthBasis ?? TextWidthBasis.parent);
+}
+
+extension Widgets on Widget Function(BuildContext) {
+  OverlayEntry getOverLay(
+          {bool? opaque, bool? maintainState, bool? canSizeOverlay}) =>
+      OverlayEntry(
+          builder: this,
+          opaque: opaque ?? false,
+          maintainState: maintainState ?? false,
+          canSizeOverlay: canSizeOverlay ?? false);
+
+  MaterialPageRoute<T> getMaterialPageRoute<T extends Object?>(
+          {bool? maintainState,
+          bool? fullscreenDialog,
+          bool? allowSnapshotting,
+          RouteSettings? settings,
+          bool? barrierDismissible}) =>
+      MaterialPageRoute<T>(
+          builder: this,
+          settings: settings,
+          maintainState: maintainState ?? true,
+          fullscreenDialog: fullscreenDialog ?? false,
+          allowSnapshotting: allowSnapshotting ?? true,
+          barrierDismissible: barrierDismissible ?? false);
+
+  CupertinoPageRoute<T> getCupertinoPageRoute<T extends Object?>(
+          {String? title,
+          bool? maintainState,
+          bool? fullscreenDialog,
+          bool? allowSnapshotting,
+          RouteSettings? settings,
+          bool? barrierDismissible}) =>
+      CupertinoPageRoute<T>(
+          title: title,
+          builder: this,
+          settings: settings,
+          maintainState: maintainState ?? true,
+          fullscreenDialog: fullscreenDialog ?? false,
+          allowSnapshotting: allowSnapshotting ?? true,
+          barrierDismissible: barrierDismissible ?? false);
+}
+
+extension ButtonUt on ButtonType? {
+  CustomButton customButton(
+          {Key? key,
+          Widget? child,
+          bool? isFilled,
+          bool? autoFocus,
+          Size? fixedSize,
+          BorderSide? side,
+          Color? iconColor,
+          Color? focusColor,
+          Color? hoverColor,
+          Size? maximumSize,
+          Size? minimumSize,
+          double? elevation,
+          Color? buttonColor,
+          Clip? clipBehavior,
+          Color? shadowColor,
+          Color? splashColor,
+          Color? overlayColor,
+          bool? enableFeedback,
+          TextStyle? textStyle,
+          Color? disabledColor,
+          FocusNode? focusNode,
+          Color? highlightColor,
+          OutlinedBorder? shape,
+          double? focusElevation,
+          Color? foregroundColor,
+          double? hoverElevation,
+          Color? surfaceTintColor,
+          VoidCallback? onPressed,
+          Color? disabledIconColor,
+          double? disabledElevation,
+          VoidCallback? onLongPress,
+          double? highlightlevation,
+          Duration? animationDuration,
+          EdgeInsetsGeometry? padding,
+          void Function(bool)? onHover,
+          AlignmentGeometry? alignment,
+          VisualDensity? visualDensity,
+          Color? disabledForegroundColor,
+          MouseCursor? enabledMouseCursor,
+          MouseCursor? disabledMouseCursor,
+          void Function(bool)? onFocusChange,
+          MaterialTapTargetSize? tapTargetSize,
+          WidgetStatesController? statesController,
+          InteractiveInkFeatureFactory? splashFactory,
+          Widget Function(BuildContext, Set<WidgetState>, Widget?)?
+              backgroundBuilder,
+          Widget Function(BuildContext, Set<WidgetState>, Widget?)?
+              foregroundBuilder}) =>
+      CustomButton(
+          key: key,
+          type: this,
+          padding: padding,
+          onHover: onHover,
+          isFilled: isFilled,
+          autoFocus: autoFocus,
+          focusNode: focusNode,
+          onPressed: onPressed,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          splashColor: splashColor,
+          onLongPress: onLongPress,
+          buttonColor: buttonColor,
+          clipBehavior: clipBehavior,
+          disabledColor: disabledColor,
+          onFocusChange: onFocusChange,
+          focusElevation: focusElevation,
+          highlightColor: highlightColor,
+          hoverElevation: hoverElevation,
+          statesController: statesController,
+          disabledElevation: disabledElevation,
+          highlightElevation: highlightlevation,
+          style: buttonStyle(
+              side: side,
+              shape: shape,
+              padding: padding,
+              alignment: alignment,
+              elevation: elevation,
+              fixedSize: fixedSize,
+              iconColor: iconColor,
+              textStyle: textStyle,
+              maximumSize: maximumSize,
+              minimumSize: maximumSize,
+              shadowColor: shadowColor,
+              overlayColor: overlayColor,
+              splashFactory: splashFactory,
+              tapTargetSize: tapTargetSize,
+              visualDensity: visualDensity,
+              backgroundColor: buttonColor,
+              enableFeedback: enableFeedback,
+              foregroundColor: foregroundColor,
+              surfaceTintColor: surfaceTintColor,
+              animationDuration: animationDuration,
+              backgroundBuilder: backgroundBuilder,
+              disabledIconColor: disabledIconColor,
+              foregroundBuilder: foregroundBuilder,
+              disabledBackgroundColor: disabledColor,
+              enabledMouseCursor: enabledMouseCursor,
+              disabledMouseCursor: disabledMouseCursor,
+              disabledForegroundColor: disabledForegroundColor),
+          child: child);
+
+  ButtonStyle buttonStyle(
+      {Size? fixedSize,
+      double? iconSize,
+      BorderSide? side,
+      Color? iconColor,
+      Size? maximumSize,
+      Size? minimumSize,
+      double? elevation,
+      Color? shadowColor,
+      Color? overlayColor,
+      bool? enableFeedback,
+      TextStyle? textStyle,
+      OutlinedBorder? shape,
+      Color? foregroundColor,
+      Color? backgroundColor,
+      Color? surfaceTintColor,
+      Color? disabledIconColor,
+      EdgeInsetsGeometry? padding,
+      Duration? animationDuration,
+      AlignmentGeometry? alignment,
+      VisualDensity? visualDensity,
+      Color? disabledForegroundColor,
+      Color? disabledBackgroundColor,
+      MouseCursor? enabledMouseCursor,
+      MouseCursor? disabledMouseCursor,
+      MaterialTapTargetSize? tapTargetSize,
+      InteractiveInkFeatureFactory? splashFactory,
+      Widget Function(BuildContext, Set<WidgetState>, Widget?)?
+          backgroundBuilder,
+      Widget Function(BuildContext, Set<WidgetState>, Widget?)?
+          foregroundBuilder}) {
+    jot();
+    switch (this) {
+      case ButtonType.text:
+        return TextButton.styleFrom(
+            side: side,
+            shape: shape,
+            padding: padding,
+            alignment: alignment,
+            elevation: elevation,
+            fixedSize: fixedSize,
+            iconColor: iconColor,
+            textStyle: textStyle,
+            maximumSize: maximumSize,
+            minimumSize: maximumSize,
+            shadowColor: shadowColor,
+            overlayColor: overlayColor,
+            splashFactory: splashFactory,
+            tapTargetSize: tapTargetSize,
+            visualDensity: visualDensity,
+            enableFeedback: enableFeedback,
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor,
+            surfaceTintColor: surfaceTintColor,
+            animationDuration: animationDuration,
+            backgroundBuilder: backgroundBuilder,
+            disabledIconColor: disabledIconColor,
+            foregroundBuilder: foregroundBuilder,
+            enabledMouseCursor: enabledMouseCursor,
+            disabledMouseCursor: disabledMouseCursor,
+            disabledForegroundColor: disabledForegroundColor,
+            disabledBackgroundColor: disabledBackgroundColor);
+      case ButtonType.border:
+        return OutlinedButton.styleFrom(
+            side: side,
+            shape: shape,
+            padding: padding,
+            alignment: alignment,
+            elevation: elevation,
+            fixedSize: fixedSize,
+            iconColor: iconColor,
+            textStyle: textStyle,
+            maximumSize: maximumSize,
+            minimumSize: maximumSize,
+            shadowColor: shadowColor,
+            overlayColor: overlayColor,
+            splashFactory: splashFactory,
+            tapTargetSize: tapTargetSize,
+            visualDensity: visualDensity,
+            enableFeedback: enableFeedback,
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor,
+            surfaceTintColor: surfaceTintColor,
+            animationDuration: animationDuration,
+            backgroundBuilder: backgroundBuilder,
+            disabledIconColor: disabledIconColor,
+            foregroundBuilder: foregroundBuilder,
+            enabledMouseCursor: enabledMouseCursor,
+            disabledMouseCursor: disabledMouseCursor,
+            disabledForegroundColor: disabledForegroundColor,
+            disabledBackgroundColor: disabledBackgroundColor);
+      case ButtonType.raised:
+        return ElevatedButton.styleFrom(
+            side: side,
+            shape: shape,
+            padding: padding,
+            alignment: alignment,
+            elevation: elevation,
+            fixedSize: fixedSize,
+            iconColor: iconColor,
+            textStyle: textStyle,
+            maximumSize: maximumSize,
+            minimumSize: maximumSize,
+            shadowColor: shadowColor,
+            overlayColor: overlayColor,
+            splashFactory: splashFactory,
+            tapTargetSize: tapTargetSize,
+            visualDensity: visualDensity,
+            enableFeedback: enableFeedback,
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor,
+            surfaceTintColor: surfaceTintColor,
+            animationDuration: animationDuration,
+            backgroundBuilder: backgroundBuilder,
+            disabledIconColor: disabledIconColor,
+            foregroundBuilder: foregroundBuilder,
+            enabledMouseCursor: enabledMouseCursor,
+            disabledMouseCursor: disabledMouseCursor,
+            disabledForegroundColor: disabledForegroundColor,
+            disabledBackgroundColor: disabledBackgroundColor);
+      default:
+        return ButtonStyle(
+            alignment: alignment,
+            splashFactory: splashFactory,
+            tapTargetSize: tapTargetSize,
+            visualDensity: visualDensity,
+            enableFeedback: enableFeedback,
+            side: side?.getWSP<BorderSide?>(),
+            iconSize: iconSize?.getWSP<double?>(),
+            animationDuration: animationDuration,
+            backgroundBuilder: backgroundBuilder,
+            foregroundBuilder: foregroundBuilder,
+            fixedSize: fixedSize?.getWSP<Size?>(),
+            iconColor: iconColor?.getWSP<Color?>(),
+            elevation: elevation?.getWSP<double?>(),
+            shape: shape?.getWSP<OutlinedBorder?>(),
+            maximumSize: maximumSize?.getWSP<Size?>(),
+            minimumSize: maximumSize?.getWSP<Size?>(),
+            shadowColor: shadowColor?.getWSP<Color?>(),
+            textStyle: textStyle?.getWSP<TextStyle?>(),
+            overlayColor: overlayColor?.getWSP<Color?>(),
+            padding: padding?.getWSP<EdgeInsetsGeometry?>(),
+            backgroundColor: backgroundColor?.getWSP<Color?>(),
+            foregroundColor: foregroundColor?.getWSP<Color?>(),
+            surfaceTintColor: surfaceTintColor?.getWSP<Color?>(),
+            mouseCursor: enabledMouseCursor?.getWSP<MouseCursor?>());
+    }
+  }
 }
 
 extension Ext on XFile {
@@ -534,22 +1082,6 @@ extension Usefullness on IconData? {
           applyTextScaling: applyTextScaling);
 }
 
-// extension Jury on IosUtsname {
-//   Map<String, dynamic> get map {
-//     final data = <String, dynamic>{};
-//     try {
-//       data['machine'] = machine;
-//       data['sysname'] = sysname;
-//       data['release'] = release;
-//       data['version'] = version;
-//       data['nodename'] = nodename;
-//     } catch (e) {
-//       e.jot();
-//     }
-//     return data;
-//   }
-// }
-
 extension Fut on Fraction {
   Widget getRatingWidget(
       {MainAxisSize? mainAxisSize,
@@ -604,6 +1136,11 @@ extension Extra on Iterable<num> {
 
   bool get isSymmetric => mean == median;
 
+  double get standardDeviation => isEmpty ? double.nan : variance.squareRoot;
+
+  String getCharCodesToStr({int? start, int? end}) =>
+      String.fromCharCodes(map<int>((num e) => e.integer), start ?? 0, end);
+
   Size get size => isEmpty || !<int>[1, 2].contains(length)
       ? Size.infinite
       : (length == 1
@@ -613,8 +1150,6 @@ extension Extra on Iterable<num> {
   Offset get offset => isEmpty || length != 2
       ? Offset.infinite
       : Offset(first.float, last.float);
-
-  double get standardDeviation => isEmpty ? double.nan : variance.squareRoot;
 
   Iterable<num> get distinctItems {
     final freq = <num, int>{};
@@ -747,7 +1282,12 @@ extension Extra on Iterable<num> {
 extension Benefit on DateTime {
   TimeOfDay get time => TimeOfDay.fromDateTime(this);
 
-  bool get isToday => DateTime.now().isAtSameMomentAs(this);
+  bool get isToday => compareDateOnly(DateTime.now());
+
+  bool get isCurrentYear => year == DateTime.now().year;
+
+  bool get isYesterday =>
+      compareDateOnly(DateTime.now().subtract(Duration(days: 1)));
 
   bool compareDateOnly(DateTime other) {
     return other.year == year && other.month == month && other.day == day;
@@ -771,12 +1311,6 @@ extension Benefit on DateTime {
     } else {
       return false;
     }
-  }
-
-  String putDateTimeToString([String? separator]) {
-    final sep = separator?.trimmed ?? '-',
-        ds = (millisecond * 1000) + microsecond;
-    return '$year$sep$month$sep$day, $hour:$minute:$second.$ds';
   }
 
   bool compareDateAndTimeOnly(DateTime other) {
@@ -1253,37 +1787,6 @@ extension Assist on Map<String, Object?> {
           camelCaseContentDisposition ?? false);
 }
 
-// extension Use on DeviceInfoPlugin {
-//   Future<bool> get isRealDevice async {
-//     switch (defaultTargetPlatform) {
-//       case TargetPlatform.iOS:
-//         return isIOS && (await iosInfo).isPhysicalDevice;
-//       case TargetPlatform.android:
-//         return isAndroid && (await androidInfo).isPhysicalDevice;
-//       default:
-//         return true;
-//     }
-//   }
-// }
-
-// extension Spare on AndroidBuildVersion {
-//   Map<String, dynamic> get map {
-//     final data = <String, dynamic>{};
-//     try {
-//       data['sdk'] = sdkInt;
-//       data['base_os'] = baseOS;
-//       data['release'] = release;
-//       data['codename'] = codename;
-//       data['incremental'] = incremental;
-//       data['preview_sdk'] = previewSdkInt;
-//       data['security_patch'] = securityPatch;
-//     } catch (e) {
-//       e.jot();
-//     }
-//     return data;
-//   }
-// }
-
 extension Support on Size {
   Size get copied => Size.copy(this);
 
@@ -1294,6 +1797,11 @@ extension Support on Size {
   double get radius => (width.square + height.square).squareRoot;
 
   double get diagonal => (shortestSide.square + longestSide.square).squareRoot;
+
+  SizedOverflowBox sizedOverflowBox(
+          {Widget? child, AlignmentGeometry? alignment}) =>
+      SizedOverflowBox(
+          size: this, alignment: alignment ?? Alignment.center, child: child);
 }
 
 extension Tip on BoxConstraints {
@@ -1312,6 +1820,44 @@ extension Tip on BoxConstraints {
   double get avgHeight => (minHeight + maxHeight) / 2;
 
   double get avgRadius => (minRadius + maxRadius) / 2;
+}
+
+extension Jury on List<Widget>? {
+  Row placeWidgetsHorizontally(
+          {Key? key,
+          MainAxisSize? mainAxisSize,
+          TextBaseline? textBaseline,
+          TextDirection? textDirection,
+          MainAxisAlignment? mainAxisAlignment,
+          VerticalDirection? verticalDirection,
+          CrossAxisAlignment? crossAxisAlignment}) =>
+      Row(
+          key: key,
+          textBaseline: textBaseline,
+          textDirection: textDirection,
+          mainAxisSize: mainAxisSize ?? MainAxisSize.max,
+          verticalDirection: verticalDirection ?? VerticalDirection.down,
+          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+          children: this ?? <Widget>[]);
+
+  Column placeWidgetsVertically(
+          {Key? key,
+          MainAxisSize? mainAxisSize,
+          TextBaseline? textBaseline,
+          TextDirection? textDirection,
+          MainAxisAlignment? mainAxisAlignment,
+          VerticalDirection? verticalDirection,
+          CrossAxisAlignment? crossAxisAlignment}) =>
+      Column(
+          key: key,
+          textBaseline: textBaseline,
+          textDirection: textDirection,
+          mainAxisSize: mainAxisSize ?? MainAxisSize.max,
+          verticalDirection: verticalDirection ?? VerticalDirection.down,
+          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+          children: this ?? <Widget>[]);
 }
 
 extension Hand on ImageSource {
@@ -1403,6 +1949,8 @@ extension Avail on num {
 
   Fraction get fraction => toFraction();
 
+  BigInt get bigInt => BigInt.from(this);
+
   double get approximate => roundToDouble();
 
   num toThePowerOf(num exp) => pow(this, exp);
@@ -1414,12 +1962,21 @@ extension Avail on num {
   Offset offsetFromRadians([double? distance]) =>
       Offset.fromDirection(radians.float, distance ?? 1.0);
 
-  bool get isPerfectSquare =>
-      this > 0.0 &&
-      (this is int
-          ? squareRoot * squareRoot == this
-          : (string.split('.').last.length % 2 == 0 &&
-              string.split('.').join().toInt().isPerfectSquare));
+  bool get isPerfectSquare {
+    bool isSquare = this > 0.0;
+    switch (runtimeType) {
+      case const (int):
+        isSquare = isSquare && squareRoot * squareRoot == this;
+        break;
+      case const (double):
+        final List<String> arrSplit = string.split('.');
+        isSquare = isSquare &&
+            arrSplit.last.length.isEven &&
+            arrSplit.join().toInt().isPerfectSquare;
+        break;
+    }
+    return isSquare;
+  }
 }
 
 extension Help on int {
@@ -1634,7 +2191,7 @@ extension PlaceUtils on LatLng {
       gl.distanceBetween(latitude, longitude, other.latitude, other.longitude) /
       1000;
 
-  CameraPosition getCameraPosition(
+  CameraPosition cameraPosition(
           {double? tilt, double? zoom, double? bearing}) =>
       CameraPosition(
           target: this,
@@ -1726,13 +2283,27 @@ extension Services on TimeOfDay {
 }
 
 extension Utils on String {
-  String get trimmed => trim();
-
   File get file => File(trimmed);
 
-  String get lowerCased => toLowerCase();
+  String get trimmed {
+    final ip = this;
+    return ip.trim();
+  }
 
-  String get upperCased => toUpperCase();
+  String get lowerCased {
+    final ip = this;
+    return ip.toLowerCase();
+  }
+
+  String get upperCased {
+    final ip = this;
+    return ip.toUpperCase();
+  }
+
+  String get firstLetterCapitalized {
+    final ip = this;
+    return ip[0].upperCased + ip.substring(1).lowerCased;
+  }
 
   MarkerId get markerID => MarkerId(trimmed);
 
@@ -1751,6 +2322,10 @@ extension Utils on String {
   String get currencySymbol => nf.simpleCurrencySymbol(this);
 
   List<PointLatLng> get points => mpp.decodePolyline(trimmed);
+
+  bool get isFromAsset => r'assets'.getRE().hasMatch(trimmed);
+
+  bool get isFromServer => r'https'.getRE().hasMatch(trimmed);
 
   T? valFromConfig<T extends Object?>() => gc?.getValue<T>(trimmed);
 
@@ -1779,9 +2354,6 @@ extension Utils on String {
   double toDouble([double? orElse]) =>
       double.tryParse(trimmed) ?? (orElse ?? double.nan);
 
-  FileImage ipFromFile([double? scale]) =>
-      FileImage(file, scale: scale ?? measurements.unit);
-
   int toInt([int? radix, int? orElse]) =>
       int.tryParse(trimmed, radix: radix) ?? (orElse ?? -1);
 
@@ -1793,9 +2365,6 @@ extension Utils on String {
 
   int numberFromEnv([int? defaultVal]) =>
       int.fromEnvironment(trimmed, defaultValue: defaultVal ?? 0);
-
-  AssetImage ipFromAsset([String? package, AssetBundle? bundle]) =>
-      AssetImage(this, package: package, bundle: bundle);
 
   String stringFromEnv([String? defaultVal]) =>
       String.fromEnvironment(trimmed, defaultValue: defaultVal ?? '');
@@ -1816,13 +2385,6 @@ extension Utils on String {
 
   bool toBool([bool? isCaseSensitive]) =>
       bool.tryParse(trimmed, caseSensitive: isCaseSensitive ?? true) ?? false;
-
-  NetworkImage ipFromServer([double? scale, Map<String, String>? headers]) =>
-      NetworkImage(this, scale: scale ?? measurements.unit, headers: headers);
-
-  String get firstLetterCapitalized => trimmed.isEmpty
-      ? ''
-      : trimmed.substring(0, 1).upperCased + trimmed.substring(1).lowerCased;
 
   bool Function(Route<dynamic>) get popDestination =>
       ModalRoute.withName(trimmed);
@@ -1952,20 +2514,52 @@ extension Utils on String {
         .asUint8List();
   }
 
-  Widget getImageFromAsset(
+  String getCommonPattern(String other) {
+    List<int> generator(int i) {
+      return List<int>.filled(other.length + 1, 0);
+    }
+
+    int z = 0;
+    List<String> ret = <String>[];
+    final List<List<int>> l = List.generate(length + 1, generator);
+
+    for (int i = 1; i <= length; i++) {
+      for (int j = 1; j <= other.length; j++) {
+        if (this[i - 1] == other[j - 1]) {
+          l[i][j] = (i == 1 || j == 1 ? 0 : l[i - 1][j - 1]) + 1;
+          if (l[i][j] > z) {
+            z = l[i][j];
+            ret = <String>[substring(i - z, i)];
+          } else if (l[i][j] == z) {
+            ret.add(substring(i - z, i));
+          }
+        } else {
+          l[i][j] = 0;
+        }
+      }
+    }
+    ret.jot();
+    return ret.singleOrNull ?? '';
+  }
+
+  Widget getImageFromAssetOrNetwork(
           {Key? key,
           BoxFit? fit,
           Color? color,
           double? scale,
           double? width,
           double? height,
+          SvgTheme? theme,
           String? package,
           int? cacheWidth,
           int? cacheHeight,
           bool? isAntiAlias,
           Rect? centerSlice,
+          Clip? clipBehavior,
+          Client? httpClient,
           ImageRepeat? repeat,
           AssetBundle? bundle,
+          BlendMode? blendMode,
           String? semanticLabel,
           bool? gaplessPlayback,
           ColorFilter? colorFilter,
@@ -1975,44 +2569,98 @@ extension Utils on String {
           bool? excludeFromSemantics,
           FilterQuality? filterQuality,
           AlignmentGeometry? alignment,
+          Map<String, String>? headers,
+          bool? allowDrawingOutsideViewBox,
+          Widget Function(BuildContext)? placeHolder,
           Widget Function(BuildContext, Widget, int?, bool)? frameBuilder,
-          Widget Function(BuildContext, Object, StackTrace?)? errorBuilder}) =>
+          Widget Function(BuildContext, Object, StackTrace?)? errorBuilder,
+          Widget Function(BuildContext, Widget, ImageChunkEvent?)?
+              loadingBuilder}) =>
       isSvg
-          ? SvgPicture.asset(trimmed,
-              key: key,
-              width: width,
-              bundle: bundle,
-              height: height,
-              package: package,
-              colorFilter: colorFilter,
-              fit: fit ?? BoxFit.contain,
-              alignment: alignment ?? Alignment.center,
-              matchTextDirection: matchTextDirection ?? false,
-              excludeFromSemantics: excludeFromSemantics ?? false)
-          : Image.asset(trimmed,
-              fit: fit,
-              key: key,
-              width: width,
-              scale: scale,
-              color: color,
-              bundle: bundle,
-              height: height,
-              opacity: opacity,
-              package: package,
-              cacheWidth: cacheWidth,
-              centerSlice: centerSlice,
-              cacheHeight: cacheHeight,
-              errorBuilder: errorBuilder,
-              frameBuilder: frameBuilder,
-              semanticLabel: semanticLabel,
-              colorBlendMode: colorBlendMode,
-              isAntiAlias: isAntiAlias ?? false,
-              repeat: repeat ?? ImageRepeat.noRepeat,
-              alignment: alignment ?? Alignment.center,
-              gaplessPlayback: gaplessPlayback ?? false,
-              matchTextDirection: matchTextDirection ?? false,
-              filterQuality: filterQuality ?? 'low'.filterQuality,
-              excludeFromSemantics: excludeFromSemantics ?? false);
+          ? (isFromServer
+              ? SvgPicture.network(trimmed,
+                  key: key,
+                  theme: theme,
+                  width: width,
+                  height: height,
+                  headers: headers,
+                  httpClient: httpClient,
+                  colorFilter: colorFilter,
+                  fit: fit ?? BoxFit.contain,
+                  semanticsLabel: semanticLabel,
+                  placeholderBuilder: placeHolder,
+                  alignment: alignment ?? Alignment.center,
+                  clipBehavior: clipBehavior ?? Clip.hardEdge,
+                  matchTextDirection: matchTextDirection ?? false,
+                  excludeFromSemantics: excludeFromSemantics ?? false,
+                  allowDrawingOutsideViewBox:
+                      allowDrawingOutsideViewBox ?? false)
+              : SvgPicture.asset(trimmed,
+                  key: key,
+                  theme: theme,
+                  width: width,
+                  bundle: bundle,
+                  height: height,
+                  package: package,
+                  colorFilter: colorFilter,
+                  fit: fit ?? BoxFit.contain,
+                  semanticsLabel: semanticLabel,
+                  placeholderBuilder: placeHolder,
+                  alignment: alignment ?? Alignment.center,
+                  clipBehavior: clipBehavior ?? Clip.hardEdge,
+                  matchTextDirection: matchTextDirection ?? false,
+                  excludeFromSemantics: excludeFromSemantics ?? false,
+                  allowDrawingOutsideViewBox:
+                      allowDrawingOutsideViewBox ?? false))
+          : (isFromServer
+              ? Image.network(trimmed,
+                  fit: fit,
+                  key: key,
+                  width: width,
+                  color: color,
+                  height: height,
+                  headers: headers,
+                  opacity: opacity,
+                  cacheWidth: cacheWidth,
+                  centerSlice: centerSlice,
+                  cacheHeight: cacheHeight,
+                  errorBuilder: errorBuilder,
+                  frameBuilder: frameBuilder,
+                  semanticLabel: semanticLabel,
+                  colorBlendMode: colorBlendMode,
+                  loadingBuilder: loadingBuilder,
+                  isAntiAlias: isAntiAlias ?? false,
+                  scale: scale ?? measurements.unit,
+                  repeat: repeat ?? ImageRepeat.noRepeat,
+                  alignment: alignment ?? Alignment.center,
+                  gaplessPlayback: gaplessPlayback ?? false,
+                  matchTextDirection: matchTextDirection ?? false,
+                  filterQuality: filterQuality ?? 'low'.filterQuality,
+                  excludeFromSemantics: excludeFromSemantics ?? false)
+              : Image.asset(trimmed,
+                  fit: fit,
+                  key: key,
+                  width: width,
+                  scale: scale,
+                  color: color,
+                  bundle: bundle,
+                  height: height,
+                  opacity: opacity,
+                  package: package,
+                  cacheWidth: cacheWidth,
+                  centerSlice: centerSlice,
+                  cacheHeight: cacheHeight,
+                  errorBuilder: errorBuilder,
+                  frameBuilder: frameBuilder,
+                  semanticLabel: semanticLabel,
+                  colorBlendMode: colorBlendMode,
+                  isAntiAlias: isAntiAlias ?? false,
+                  repeat: repeat ?? ImageRepeat.noRepeat,
+                  alignment: alignment ?? Alignment.center,
+                  gaplessPlayback: gaplessPlayback ?? false,
+                  matchTextDirection: matchTextDirection ?? false,
+                  filterQuality: filterQuality ?? 'low'.filterQuality,
+                  excludeFromSemantics: excludeFromSemantics ?? false));
 
   CrossAxisAlignment? get caa {
     switch (lowerCased.trimmed) {
@@ -2535,9 +3183,9 @@ extension Helper on BuildContext {
 
   double get width => (dimensions.size.width + nonNullSize.width) / 2;
 
-  double get radius => (dimensions.size.radius + nonNullSize.radius) / 2;
-
   double get height => (dimensions.size.height + nonNullSize.height) / 2;
+
+  double get radius => (dimensions.size.radius + nonNullSize.radius) / 2;
 
   void hideSnackBar([SnackBarClosedReason? reason]) {
     smcT.hideCurrentSnackBar(reason: reason ?? SnackBarClosedReason.hide);
@@ -2589,16 +3237,6 @@ extension Helper on BuildContext {
         ? sct.closeEndDrawer()
         : doNothing();
   }
-
-  // void addLoader({Duration? time, LoaderType? type}) {
-  //   try {
-  //     (ol?.mounted ?? false)
-  //         ? ol?.insert(overlayLoader(time: time, type: type))
-  //         : doNothing();
-  //   } catch (e) {
-  //     e.jot();
-  //   }
-  // }
 
   void initScreenUtil(
           {Size? designSize,

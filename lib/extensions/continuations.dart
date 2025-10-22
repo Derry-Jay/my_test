@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:intl/intl.dart';
@@ -9,13 +10,25 @@ import 'package:intl/intl.dart';
 import '../utils/values.dart';
 import 'extensions.dart';
 
+extension BorderUtil on BorderSide? {
+  StadiumBorder get stadiumBorder =>
+      StadiumBorder(side: this ?? BorderSide.none);
+
+  CircleBorder circleBorder({double? ecc}) => CircleBorder(
+      side: this ?? BorderSide.none, eccentricity: ecc ?? measurements.nil);
+}
+
 extension StrHp on String {
   Finder getTextFinder({bool? findRichText, bool? skipOffstage}) {
-    return find.text(this, findRichText: findRichText ?? false, skipOffstage: skipOffstage ?? true);
+    return find.text(this,
+        findRichText: findRichText ?? false,
+        skipOffstage: skipOffstage ?? true);
   }
 
   Finder getContainingTextFinder({bool? findRichText, bool? skipOffstage}) {
-    return find.textContaining(this, findRichText: findRichText ?? false, skipOffstage: skipOffstage ?? true);
+    return find.textContaining(this,
+        findRichText: findRichText ?? false,
+        skipOffstage: skipOffstage ?? true);
   }
 }
 
@@ -32,6 +45,32 @@ extension Usefullness on IconData {
           offset: offset,
           gradient: gradient,
           size: size ?? measurements.defaultGradientIconSize);
+}
+
+extension StrUtil on String {
+  ImageProvider imageProvider(
+          {Size? size,
+          Color? color,
+          double? scale,
+          String? package,
+          AssetBundle? bundle,
+          Map<String, String>? headers,
+          Future<String?> Function(SvgImageKey)? svgGetter}) =>
+      isSvg
+          ? Svg(trimmed,
+              size: size,
+              color: color,
+              scale: scale,
+              svgGetter: svgGetter,
+              source: isFromServer
+                  ? SvgSource.network
+                  : (isFromAsset ? SvgSource.asset : SvgSource.file))
+          : (isFromServer
+              ? NetworkImage(trimmed,
+                  scale: scale ?? measurements.unit, headers: headers)
+              : (isFromAsset
+                  ? AssetImage(trimmed, package: package, bundle: bundle)
+                  : FileImage(file, scale: scale ?? measurements.unit)));
 }
 
 extension StrUt on String? {
@@ -67,6 +106,21 @@ extension SizeUt on Size? {
 extension DoubUt on double? {
   Widget squareConstrainChild({Widget? child}) =>
       SizedBox.square(dimension: this, child: child);
+
+  CircularProgressIndicator getAdaptiveLoader(
+          {double? strokeWidth,
+          StrokeCap? strokeCap,
+          Color? backgroundColor,
+          String? semanticsLabel,
+          String? semanticsValue,
+          Animation<Color?>? valueColor}) =>
+      CircularProgressIndicator.adaptive(
+          value: this,
+          strokeCap: strokeCap,
+          valueColor: valueColor,
+          semanticsLabel: semanticsLabel,
+          semanticsValue: semanticsValue,
+          strokeWidth: strokeWidth ?? measurements.defaultStrokeWidth);
 }
 
 extension Extension on Uint8List {
@@ -76,6 +130,16 @@ extension Extension on Uint8List {
           targetWidth: targetWidth,
           targetHeight: targetHeight,
           allowUpscaling: allowUpscaling ?? true);
+}
+
+extension DateUtils on DateTime {
+  String get formattedDate1 => isToday
+      ? 'Today'
+      : (isYesterday
+          ? 'Yesterday'
+          : (isCurrentYear
+              ? DateFormat.MMMMd().format(this)
+              : DateFormat.yMMMMd('en_US').format(this)));
 }
 
 extension IntUt1 on int? {
@@ -103,4 +167,56 @@ extension IntUt1 on int? {
         return FontWeight.normal;
     }
   }
+}
+
+extension ShapeUt on BoxShape? {
+  BoxDecoration boxDecoration(
+          {Color? color,
+          BoxBorder? border,
+          Gradient? gradient,
+          DecorationImage? image,
+          List<BoxShadow>? boxShadow,
+          BlendMode? backgroundBlendMode,
+          BorderRadiusGeometry? borderRadius}) =>
+      BoxDecoration(
+          color: color,
+          image: image,
+          border: border,
+          gradient: gradient,
+          boxShadow: boxShadow,
+          borderRadius: borderRadius,
+          shape: this ?? BoxShape.rectangle,
+          backgroundBlendMode: backgroundBlendMode);
+}
+
+extension ClipUt on Clip? {
+  Container container(
+          {Key? key,
+          Color? color,
+          Widget? child,
+          double? width,
+          double? height,
+          Matrix4? transform,
+          Decoration? decoration,
+          EdgeInsetsGeometry? margin,
+          BoxConstraints? constraints,
+          EdgeInsetsGeometry? padding,
+          AlignmentGeometry? alignment,
+          Decoration? foregroundDecoration,
+          AlignmentGeometry? transformAlignment}) =>
+      Container(
+          key: key,
+          color: color,
+          width: width,
+          height: height,
+          margin: margin,
+          padding: margin,
+          alignment: alignment,
+          transform: transform,
+          decoration: decoration,
+          constraints: constraints,
+          clipBehavior: this ?? Clip.none,
+          transformAlignment: transformAlignment,
+          foregroundDecoration: foregroundDecoration,
+          child: child);
 }

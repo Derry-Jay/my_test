@@ -16,6 +16,7 @@ class Measurements {
       nilWb = 0.w,
       unitHt = 1.h,
       unitWb = 1.w,
+      defaultStrokeWidth = 4.w,
       customStepGranularity = 2.sp,
       toolbarHeight = kToolbarHeight.h,
       xs = 'xs'.valFromConfig<String>()?.toInt().sp ?? double.nan,

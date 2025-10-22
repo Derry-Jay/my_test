@@ -62,9 +62,9 @@ final css = Css(),
     gl = MyGeoLocator(),
     nf = NumberFormat(),
     mp = MyMediaPicker(),
-    today = DateTime.now(),
     fmd1 = DateFormat.MMMd(),
     spaceExp = r'\s'.getRE(),
+    mpp = MyPolylinePoints(),
     la = MyLocalAuthentication(),
     thisMoment = TimeOfDay.now(),
     sc = TextEditingController(),
@@ -77,12 +77,18 @@ final css = Css(),
     edc = TextEditingController(),
     rg = RouteGenerator(flag: true),
     isPortable = isAndroid || isIOS,
-    mpp = MyPolylinePoints(),
     alphaNumExp = r'^[a-zA-Z0-9]+$'.getRE(),
     cm = getState<CommonState>(obtainCommonState),
     sharedPrefs = SharedPreferences.getInstance(),
     isIOS = Platform.isIOS && defaultTargetPlatform == TargetPlatform.iOS,
     minPwdLth = 'minimum_password_length'.valFromConfig<String>()?.toInt() ?? 8,
+    today = DateTime.now()
+        .year
+        .getDate(month: DateTime.now().month, day: DateTime.now().day),
+    yesterday = DateTime.now()
+        .year
+        .getDate(month: DateTime.now().month, day: DateTime.now().day)
+        .subtract(Duration(days: 1)),
     isAndroid =
         Platform.isAndroid && defaultTargetPlatform == TargetPlatform.android,
     isWindows =
