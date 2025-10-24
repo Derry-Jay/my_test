@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../extensions/continuations.dart';
-import '../../../extensions/extensions.dart';
+import 'package:common_utils/common_utils.dart';
 
 class PaddedSizedBox extends StatelessWidget {
   final Size? size;
@@ -12,6 +11,7 @@ class PaddedSizedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return size.constrainChild(child: padding.paddedWidget(child: child));
+    return size.constrainChild(
+        child: padding.setPaddingAroundWidget(child: child));
   }
 }
