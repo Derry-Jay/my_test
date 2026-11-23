@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/enums.dart';
-import '../../../../utils/values.dart';
 import 'empty_widget.dart';
 
 class CustomButton extends StatelessWidget {
@@ -12,32 +11,46 @@ class CustomButton extends StatelessWidget {
   final Clip? clipBehavior;
   final ButtonStyle? style;
   final FocusNode? focusNode;
-  final OutlinedBorder? shape;
   final bool? autoFocus, isFilled;
   final EdgeInsetsGeometry? padding;
-  final Color? buttonColor, disabledColor;
   final VoidCallback? onPressed, onLongPress;
   final WidgetStatesController? statesController;
   final void Function(bool)? onHover, onFocusChange;
-  CustomButton(
+  final double? focusElevation,
+      hoverElevation,
+      disabledElevation,
+      highlightElevation;
+  final Color? buttonColor,
+      focusColor,
+      hoverColor,
+      splashColor,
+      disabledColor,
+      highlightColor;
+  const CustomButton(
       {super.key,
       this.type,
       this.child,
       this.style,
-      this.shape,
       this.onHover,
       this.padding,
       this.isFilled,
       this.focusNode,
       this.autoFocus,
       this.onPressed,
+      this.focusColor,
+      this.hoverColor,
       this.buttonColor,
+      this.splashColor,
       this.onLongPress,
       this.clipBehavior,
       this.disabledColor,
       this.onFocusChange,
-      this.statesController})
-      : assert(isCupertino || type != null);
+      this.focusElevation,
+      this.hoverElevation,
+      this.highlightColor,
+      this.statesController,
+      this.disabledElevation,
+      this.highlightElevation});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +76,6 @@ class CustomButton extends StatelessWidget {
                 onHover: onHover,
                 onPressed: onPressed,
                 focusNode: focusNode,
-                onLongPress: onLongPress,
                 onFocusChange: onFocusChange,
                 autofocus: autoFocus ?? false,
                 statesController: statesController,
@@ -94,7 +106,45 @@ class CustomButton extends StatelessWidget {
                 clipBehavior: clipBehavior ?? Clip.none,
                 child: child ?? const EmptyWidget());
           default:
-            return const EmptyWidget();
+            final states =
+                statesController?.value ?? WidgetState.values.toSet();
+            return RawMaterialButton(
+                onPressed: onPressed,
+                focusNode: focusNode,
+                fillColor: buttonColor,
+                focusColor: focusColor,
+                hoverColor: hoverColor,
+                onLongPress: onLongPress,
+                splashColor: splashColor,
+                autofocus: autoFocus ?? false,
+                highlightColor: highlightColor,
+                onHighlightChanged: onFocusChange,
+                padding: padding ?? EdgeInsets.zero,
+                focusElevation: focusElevation ?? 4.0,
+                hoverElevation: hoverElevation ?? 4.0,
+                clipBehavior: clipBehavior ?? Clip.none,
+                disabledElevation: disabledElevation ?? 0.0,
+                materialTapTargetSize: style?.tapTargetSize,
+                textStyle: style?.textStyle?.resolve(states),
+                highlightElevation: highlightElevation ?? 8.0,
+                enableFeedback: style?.enableFeedback ?? true,
+                mouseCursor: style?.mouseCursor?.resolve(states),
+                elevation: style?.elevation?.resolve(states) ?? 2.0,
+                visualDensity: style?.visualDensity ?? VisualDensity.standard,
+                shape: style?.shape?.resolve(states) ??
+                    const RoundedRectangleBorder(),
+                animationDuration:
+                    style?.animationDuration ?? kThemeChangeDuration,
+                constraints: BoxConstraints(
+                    maxWidth: style?.maximumSize?.resolve(states)?.width ??
+                        double.infinity,
+                    minWidth:
+                        style?.minimumSize?.resolve(states)?.width ?? 88.0,
+                    maxHeight: style?.maximumSize?.resolve(states)?.height ??
+                        double.infinity,
+                    minHeight:
+                        style?.minimumSize?.resolve(states)?.height ?? 36.0),
+                child: child);
         }
     }
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '/extensions/continuations.dart';
 
+import '/extensions/continuations.dart';
 import 'utils/values.dart';
 
 class AppRoot extends StatelessWidget {
@@ -97,9 +97,9 @@ class AppRoot extends StatelessWidget {
             builder: builder,
             theme: themeApple,
             shortcuts: shortcuts,
-            title: title ?? acf.name,
             initialRoute: initialRoute,
             navigatorKey: navigatorKey,
+            title: title ?? acf.fullName,
             scrollBehavior: scrollBehavior,
             onUnknownRoute: onUnknownRoute,
             onGenerateRoute: onGenerateRoute,
@@ -131,9 +131,9 @@ class AppRoot extends StatelessWidget {
             shortcuts: shortcuts,
             theme: themeMaterial,
             darkTheme: darkMaterial,
-            title: title ?? acf.name,
             initialRoute: initialRoute,
             navigatorKey: navigatorKey,
+            title: title ?? acf.fullName,
             scrollBehavior: scrollBehavior,
             onUnknownRoute: onUnknownRoute,
             onGenerateRoute: onGenerateRoute,

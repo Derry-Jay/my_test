@@ -20,9 +20,9 @@ class MyScreen extends StatelessWidget {
       body: EdgeInsets.symmetric(horizontal: 10).paddedWidget(
           child: context.nonNullSize.constrainChild(
               child: Column(children: <Widget>[
-        // assets.bigImage
-        //     .getImageFromAsset(fit: BoxFit.fill)
-        //     .wrapWithFlexible(flex: 10),
+        assets.bigImage
+            .getImageFromAssetOrNetwork(fit: BoxFit.fill)
+            .wrapWithFlexible(flex: 5),
         'Unsupported device resolution'
             .textWidget(
                 style: 'manrope'.getStyleFromFont(
@@ -33,8 +33,11 @@ class MyScreen extends StatelessWidget {
                 style: 'manrope'.getStyleFromFont(height: 1.5, fontSize: 17.5))
             .wrapWithFlexible(flex: 2),
         Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-          assets.flashImage.getImageFromAsset().wrapWithFlexible(),
-          (context.width / 80).sizeFromWidth.constrainChild().wrapWithFlexible(),
+          assets.flashImage.getImageFromAssetOrNetwork().wrapWithFlexible(),
+          (context.width / 80)
+              .sizeFromWidth
+              .constrainChild()
+              .wrapWithFlexible(),
           'Happy trading!'
               .textWidget(
                   style: 'manrope'.getStyleFromFont(

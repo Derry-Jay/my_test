@@ -17,6 +17,12 @@ class ScreenLayout extends StatelessWidget {
   final void Function(bool)? onDrawerChanged, onEndDrawerChanged;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final FloatingActionButtonAnimator? floatingActionButtonAnimator;
+  final Widget? drawer,
+      content,
+      endDrawer,
+      bottomSheet,
+      bottomNavigationBar,
+      floatingActionButton;
   final bool? primary,
       extendBody,
       isTabScreen,
@@ -24,12 +30,6 @@ class ScreenLayout extends StatelessWidget {
       resizeToAvoidBottomInset,
       drawerEnableOpenDragGesture,
       endDrawerEnableOpenDragGesture;
-  final Widget? drawer,
-      content,
-      endDrawer,
-      bottomSheet,
-      bottomNavigationBar,
-      floatingActionButton;
   const ScreenLayout(
       {super.key,
       this.appBar,

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:my_test/extensions/additions.dart';
+import 'package:my_test/extensions/continuations.dart';
+import 'package:my_test/utils/values.dart';
 
 import '../../../extensions/extensions.dart';
-import '../../widgets/common/screen_layout.dart';
-import '../../widgets/common/themed_apple_app_bar.dart';
+import '../../../models/common/account_history_record.dart';
+import '../../../utils/methods.dart';
+import '../../widgets/common/padded_sized_box.dart';
 import '../../widgets/common/themed_material_app_bar.dart';
 
 class SampleScreen extends StatelessWidget {
@@ -10,14 +15,135 @@ class SampleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Clip? clip;
+    BoxShape? shape;
     return SafeArea(
-        child: ScreenLayout(
-            content: 'pt'.textWidget(),
-            appBar: const ThemedMaterialAppBar(),
-            navigationBar: ThemedAppleAppBar(
-              previousPageTitle: 'Root',
-              middle: 'Sample'.textWidget(),
-              trailing: 'Next'.textWidget(),
+        child: Scaffold(
+            body: GroupedListView<AccountHistoryRecord, DateTime>(
+              order: GroupedListOrder.DESC,
+              groupBy: groupAccountHistoryBy,
+              elements: cm.accountRecordHistory,
+              separator: Divider(),
+              groupSeparatorBuilder: (DateTime groupByValue) =>
+                  groupByValue.formattedDate1.textWidget(),
+              itemBuilder: (BuildContext context,
+                      AccountHistoryRecord element) =>
+                  Card.filled(child: element.request
+                          .textWidget(
+                              style: 'manrope'.getStyleFromFont(
+                                  height: 1.25, color: 0xFF436AF5.color))
+                          .
+                          // filterC
+                          chip(
+                              // selected: true,
+                              color: 0xFFECF0FE.color,
+                              // selectedColor: 0xFF436AF5.color,
+                              deleteIconColor: 0xFF436AF5.color,
+                              shape: BorderSide(color: 0xFF436AF5.color)
+                                  .stadiumBorder,
+                              deleteIcon: assets.tick
+                                  .getImageFromAssetOrNetwork(
+                                      fit: BoxFit.fitHeight),
+                              onDeleted: () {},
+                              labelStyle: 'manrope'
+                                  .getStyleFromFont(color: 0xFF436AF5.color))),
+              itemComparator:
+                  (AccountHistoryRecord item1, AccountHistoryRecord item2) =>
+                      item2.date.compareTo(item1.date),
+              // indexedItemBuilder:
+              //     (BuildContext context, AccountHistoryRecord element, int i) =>
+              //         element.request.textWidget(),
+            ),
+            bottomNavigationBar: PaddedSizedBox(
+                size: Size(
+                    context.nonNullSize.width, context.nonNullSize.height / 10),
+                padding: EdgeInsets.symmetric(
+                    vertical: context.nonNullSize.height / 100,
+                    horizontal: context.nonNullSize.width / 8),
+                child: <Widget>[
+                  <Widget>[
+                    <Widget>[
+                      'Income range'
+                          .textWidget(
+                              style: 'manrope'.getStyleFromFont(
+                                  fontSize: 14,
+                                  color: 0xff202020.color,
+                                  fontWeight: 600.fontWeight))
+                          .wrapWithFlexible(),
+                      clip
+                          .container(
+                              margin: EdgeInsets.only(left: context.width / 80),
+                              decoration: shape.boxDecoration(
+                                  color: 0xFFF0F0F0.color,
+                                  borderRadius: 90.0.circularBorderRadius),
+                              child: EdgeInsets.symmetric(
+                                      horizontal: context.width / 80,
+                                      vertical: context.height / 250)
+                                  .paddedWidget(
+                                      child: 'Segments'.textWidget(
+                                          style: 'manrope'.getStyleFromFont(
+                                              color: 0xff404040.color))))
+                          .wrapWithFlexible(),
+                    ]
+                        .placeWidgetsHorizontally(
+                            mainAxisAlignment: MainAxisAlignment.start)
+                        .wrapWithFlexible(),
+                    <Widget>[
+                      clip
+                          .container(
+                              margin: EdgeInsets.only(
+                                  right: context.width / 65.536),
+                              child: '12:30:28,'.textWidget(
+                                  style: 'poppins'.getStyleFromFont(
+                                      height: 1.5, color: 0xFF6A7483.color)))
+                          .wrapWithFlexible(),
+                      <Widget>[
+                        assets.paperClip
+                            .getImageFromAssetOrNetwork()
+                            .wrapWithFlexible(),
+                        '10'
+                            .textWidget(
+                                style: 'poppins'.getStyleFromFont(
+                                    height: 1.5, color: 0xFF6A7483.color))
+                            .wrapWithFlexible()
+                      ]
+                          .placeWidgetsHorizontally(
+                              mainAxisAlignment: MainAxisAlignment.start)
+                          .wrapWithFlexible(),
+                    ]
+                        .placeWidgetsHorizontally(
+                            mainAxisAlignment: MainAxisAlignment.start)
+                        .wrapWithFlexible()
+                  ]
+                      .placeWidgetsVertically(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly)
+                      .wrapWithFlexible(flex: 7),
+                  clip
+                      .container(
+                          decoration: shape.boxDecoration(
+                              color: 0xFFFFF9E5.color,
+                              borderRadius: 20.0.circularBorderRadius),
+                          child: EdgeInsets.symmetric(
+                                  horizontal: context.width / 80,
+                                  vertical: context.height / 250)
+                              .paddedWidget(
+                                  child: 'In progress'.textWidget(
+                                      style: 'poppins'.getStyleFromFont(
+                                          height: 1.5,
+                                          color: 0xff806900.color))))
+                      .wrapWithFlexible(flex: 3)
+                ].placeWidgetsHorizontally(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween)),
+            appBar: ThemedMaterialAppBar(
+              actions: [
+                Icons.abc_sharp.iconBuilder().iconButtonBuilder(onPressed: () {
+                  60.toThePowerOf(9).bigInt.time.inDays.jot();
+                  (60 * 10.toThePowerOf(9)).bigInt.time.jot();
+                  2712.charCodeToStr.jot();
+                  <int>[5, 1, 2, 4, 3].sortedElements().jot();
+                })
+              ],
             )));
   }
 }
@@ -71,16 +197,6 @@ class SampleScreen extends StatelessWidget {
   // }
 
   // /// Display the thumbnail of the captured image or video.
-  // Widget _thumbnailWidget() {
-  //   final VideoPlayerController? localVideoController = videoController;
-
-  //   return Expanded(
-  //     child: Align(
-  //       alignment: Alignment.centerRight,
-  //       child: ,
-  //     ),
-  //   );
-  // }
 
   // /// Display a bar with buttons to change the flash and exposure modes
   // Widget _modeControlRowWidget() {
@@ -102,15 +218,6 @@ class SampleScreen extends StatelessWidget {
   //               ),
   //             ),
   //           );
-  // }
-
-  // Widget _flashModeControlRowWidget() {
-  //   return SizeTransition(
-  //     sizeFactor: _flashModeControlRowAnimation,
-  //     child: ClipRect(
-  //       child: ,
-  //     ),
-  //   );
   // }
 
   // Widget _exposureModeControlRowWidget() {
@@ -159,13 +266,6 @@ class SampleScreen extends StatelessWidget {
   //   );
   // }
 
-  // /// Display the control bar with buttons to take pictures and record videos.
-  // Widget _captureControlRowWidget() {
-  //   final CameraController? cameraController = controller;
-
-  //   return ;
-  // }
-
   // /// Display a row of toggle to select the camera (or a message if no camera is available).
   // Widget _cameraTogglesRowWidget() {
   //   final List<Widget> toggles = <Widget>[];
@@ -201,8 +301,6 @@ class SampleScreen extends StatelessWidget {
 
   //   return ;
   // }
-
-  // String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
   // void showInSnackBar(String message) {
   //   ScaffoldMessenger.of(context)

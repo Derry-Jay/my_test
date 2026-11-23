@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:june/june.dart';
 
 import '../extensions/extensions.dart';
+import '../models/common/account_history_record.dart';
 import '../states/common_state.dart';
 import '../views/widgets/common/circular_loader.dart';
 import 'enums.dart';
@@ -138,32 +139,9 @@ bool getBoolData(Map<String, dynamic> data) {
   return (data['data'] as bool);
 }
 
-String getCommonPattern(String s, String t) {
-  int z = 0;
-  List<String> ret = <String>[];
-  List<List<int>> l =
-      List.generate(s.length + 1, (_) => List.filled(t.length + 1, 0));
-
-  for (int i = 1; i <= s.length; i++) {
-    for (int j = 1; j <= t.length; j++) {
-      if (s[i - 1] == t[j - 1]) {
-        if (i == 1 || j == 1) {
-          l[i][j] = 1;
-        } else {
-          l[i][j] = l[i - 1][j - 1] + 1;
-        }
-        if (l[i][j] > z) {
-          z = l[i][j];
-          ret = <String>[s.substring(i - z, i)];
-        } else if (l[i][j] == z) {
-          ret.add(s.substring(i - z, i));
-        }
-      } else {
-        l[i][j] = 0;
-      }
-    }
-  }
-  return ret.singleOrNull ?? '';
+DateTime groupAccountHistoryBy(AccountHistoryRecord record) {
+  // record.date.jot();
+  return record.date;
 }
 
 Uint8List fromIntList(List<int> list) {
@@ -185,6 +163,8 @@ Widget getErrorWidget(BuildContext context, Object object, StackTrace? trace) {
   trace.jot();
   return object.string.textWidget();
 }
+
+String toName(String str) => str.firstLetterCapitalized;
 
 String? validateName(String? name) =>
     (name?.isEmpty ?? true) ? 'Enter a valid Name' : null;
