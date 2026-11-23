@@ -1,29 +1,23 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:june/june.dart';
+import '../blocs/stock_bloc.dart';
+import '../blocs/tab_bloc.dart';
+import '../blocs/icon_bloc.dart';
 
+<<<<<<< HEAD
 import '../extensions/extensions.dart';
 import '../models/common/account_history_record.dart';
 import '../states/common_state.dart';
 import '../views/widgets/common/circular_loader.dart';
 import 'enums.dart';
+=======
+TabBloc getTab(BuildContext context) => TabBloc(context);
+>>>>>>> 173e49f246edfb412f5b21f9210c552cbaf91321
 
-void rollbackOrientations() {
-  DeviceOrientation.values.setAllowedOrientations();
-}
+IconBloc getIcon(BuildContext context) => IconBloc(context);
 
-void lockScreenRotation() {
-  <DeviceOrientation>[
-    // DeviceOrientation.landscapeRight,
-    // DeviceOrientation.landscapeLeft,
-    DeviceOrientation.portraitUp,
-  ].setAllowedOrientations();
-}
+StockBloc getStock(BuildContext context) => StockBloc(context);
 
+<<<<<<< HEAD
 void showStatusBar() {
   SystemUiMode.manual.setSystemUIMode([SystemUiOverlay.top]);
 }
@@ -149,7 +143,7 @@ Uint8List fromIntList(List<int> list) {
 }
 
 Widget numberBuilder(CommonState cm) {
-  return Center(child: cm.ct.string.textWidget());
+  return Center(child: cm.ct.string.toText());
 }
 
 Widget getImageLoader(BuildContext context, Widget child, int? i, bool flag) {
@@ -161,7 +155,7 @@ Widget getImageLoader(BuildContext context, Widget child, int? i, bool flag) {
 Widget getErrorWidget(BuildContext context, Object object, StackTrace? trace) {
   object.jot();
   trace.jot();
-  return object.string.textWidget();
+  return object.string.toText();
 }
 
 String toName(String str) => str.firstLetterCapitalized;
@@ -179,4 +173,8 @@ String? validateEmail(String? email) {
   return email != null && email.isValidEmail
       ? null
       : 'Please enter a valid Email';
+=======
+Widget stocksSeparatorBuilder(BuildContext context, int? i) {
+  return Divider();
+>>>>>>> 173e49f246edfb412f5b21f9210c552cbaf91321
 }

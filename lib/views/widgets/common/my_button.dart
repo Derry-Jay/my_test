@@ -1,30 +1,21 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:my_test/extensions/extensions.dart';
-import 'package:my_test/utils/enums.dart';
 
-import '../../../utils/values.dart';
-import 'custom_button.dart';
+// import '../../../data/values.dart';
 
 class MyButton extends StatelessWidget {
   final Widget? child;
-  final ButtonType? type;
   final VoidCallback? onPressed;
+<<<<<<< HEAD
   const MyButton({super.key, this.type, this.child, this.onPressed});
+=======
+  const MyButton({super.key, this.child, required this.onPressed});
+>>>>>>> 173e49f246edfb412f5b21f9210c552cbaf91321
 
   @override
   Widget build(BuildContext context) {
     return CustomButton(
-        type: type,
-        onPressed: onPressed,
-        buttonColor: shades.kPurple,
-        style: ButtonStyle(
-            shape:
-                RoundedRectangleBorder(borderRadius: 4.0.circularBorderRadius)
-                    .getWSP<OutlinedBorder?>(),
-            fixedSize:
-                Size(context.width * 0.9, context.height / 16).getWSP<Size?>(),
-            foregroundColor: shades.kWhite.getWSP<Color?>(),
-            backgroundColor: shades.kPurple.getWSP<Color?>()),
+        onPressed: onPressed, //buttonColor: shades.kBlue, 
         child: child);
   }
 }

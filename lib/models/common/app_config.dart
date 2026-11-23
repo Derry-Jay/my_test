@@ -1,7 +1,5 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-
-import '../../../extensions/extensions.dart';
-import '../../utils/methods.dart';
 
 class AppConfig {
   int buildNo = 0;
@@ -23,7 +21,7 @@ class AppConfig {
       applicationName: fullName,
       applicationVersion: version,
       applicationLegalese: description,
-      applicationIcon: appIconAsset.getImageFromAssetOrNetwork(),
+      // applicationIcon: appIconAsset.imageFromAssetOrNetworkOrFile(),
       children: children);
 
   AppConfig.fromJson(Map<String, Object?> json) {

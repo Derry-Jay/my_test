@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../extensions/extensions.dart';
 
 class Measurements {
   static final Measurements _singleton = Measurements._internal();
@@ -10,6 +9,7 @@ class Measurements {
 
   Measurements._internal();
 
+<<<<<<< HEAD
   final nil = 0.sp,
       unit = 1.sp,
       nilHt = 0.h,
@@ -55,4 +55,7 @@ class Measurements {
           (('4xl'.valFromConfig<String>()?.toInt() ?? 0) + ('5xl'.valFromConfig<String>()?.toInt() ?? 0)).h,
       stretchTriggerOffset = ((('4xl'.valFromConfig<String>()?.toInt().sp ?? double.nan) + ('5xl'.valFromConfig<String>()?.toInt().sp ?? double.nan)) * 2).sp,
       defaultGradientIconSize = ((('4xl'.valFromConfig<String>()?.toInt() ?? 0) + ('3xl'.valFromConfig<String>()?.toInt() ?? 0) + ('3xs'.valFromConfig<String>()?.toInt() ?? 0)) / 2).sp;
+=======
+  final customIconSize = 'xs'.valFromConfig<String>()?.toInt().sp ?? double.nan;
+>>>>>>> 173e49f246edfb412f5b21f9210c552cbaf91321
 }
