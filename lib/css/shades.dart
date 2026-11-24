@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:common_utils/common_utils.dart';
 
 class Shades {
@@ -7,7 +9,7 @@ class Shades {
 
   factory Shades() => _singleton;
 
-  final kGold1 = Shade(1, 'gold').fromConfigs,
+  final Color kGold1 = Shade(1, 'gold').fromConfigs,
       kGrey1 = Shade(1, 'grey').fromConfigs,
       kGrey2 = Shade(2, 'grey').fromConfigs,
       kBlack1 = Shade(1, 'black').fromConfigs,

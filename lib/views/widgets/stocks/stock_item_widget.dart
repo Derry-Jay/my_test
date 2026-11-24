@@ -1,5 +1,5 @@
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../data/values.dart';
 import '../../../models/stocks/stock.dart';

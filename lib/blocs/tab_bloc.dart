@@ -1,5 +1,5 @@
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/keys.dart';
@@ -94,7 +94,7 @@ class TabBloc extends Bloc<TabState, int> {
                 .toText(style: css.stockSubscriptStyle)
                 .wrapWithFlexible(),
             Container(
-                decoration: null.boxDecoration(color: shades.kBlack2),
+                decoration: null.decorationBox(color: shades.kBlack2),
                 width: (navKey.currentState?.context.width ?? 0) / 3.2768,
                 child: <Widget>[
                   Icons.edit_square.iconBuilder(color: rainbow.kGreen),

@@ -1,5 +1,5 @@
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppConfig {
   int buildNo = 0;
@@ -28,7 +28,7 @@ class AppConfig {
     try {
       // json.jot();
       (json['flutter'] as Map<String, Object?>? ?? <String, Object?>{}).jot();
-      final vb = json['version'].string.split('+');
+      final List<String> vb = json['version'].string.split('+');
       version = vb.first;
       name = json['name'].string;
       buildNo = vb.last.toInt(null, 0);
